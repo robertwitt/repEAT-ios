@@ -51,6 +51,9 @@
 		961E057C25288B1C00C15C4C /* repEATUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = repEATUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		961E058025288B1C00C15C4C /* repEATUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = repEATUITests.swift; sourceTree = "<group>"; };
 		961E058225288B1C00C15C4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		961E05A125288C2C00C15C4C /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		961E05A225288C2C00C15C4C /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		961E05A325288C2C00C15C4C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,9 @@
 		961E054F25288B1A00C15C4C = {
 			isa = PBXGroup;
 			children = (
+				961E05A225288C2C00C15C4C /* .gitignore */,
+				961E05A125288C2C00C15C4C /* LICENSE */,
+				961E05A325288C2C00C15C4C /* README.md */,
 				961E055A25288B1A00C15C4C /* repEAT */,
 				961E057425288B1C00C15C4C /* repEATTests */,
 				961E057F25288B1C00C15C4C /* repEATUITests */,
