@@ -55,6 +55,10 @@
 		961E05A225288C2C00C15C4C /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		961E05A325288C2C00C15C4C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		961E05A825288D2D00C15C4C /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		961E05B12528947500C15C4C /* domain-model.drawio */ = {isa = PBXFileReference; lastKnownFileType = text; path = "domain-model.drawio"; sourceTree = "<group>"; };
+		961E05B22528947500C15C4C /* shared-kernel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shared-kernel.png"; sourceTree = "<group>"; };
+		961E05B32528947500C15C4C /* recipe-context.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipe-context.png"; sourceTree = "<group>"; };
+		961E05B42528949700C15C4C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,7 @@
 				961E05A825288D2D00C15C4C /* .swiftlint.yml */,
 				961E05A125288C2C00C15C4C /* LICENSE */,
 				961E05A325288C2C00C15C4C /* README.md */,
+				961E05AF2528947500C15C4C /* Docs */,
 				961E055A25288B1A00C15C4C /* repEAT */,
 				961E057425288B1C00C15C4C /* repEATTests */,
 				961E057F25288B1C00C15C4C /* repEATUITests */,
@@ -169,6 +174,25 @@
 				961E056425288B1A00C15C4C /* repEAT.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		961E05AF2528947500C15C4C /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				961E05B02528947500C15C4C /* DomainModel */,
+			);
+			path = Docs;
+			sourceTree = "<group>";
+		};
+		961E05B02528947500C15C4C /* DomainModel */ = {
+			isa = PBXGroup;
+			children = (
+				961E05B12528947500C15C4C /* domain-model.drawio */,
+				961E05B22528947500C15C4C /* shared-kernel.png */,
+				961E05B32528947500C15C4C /* recipe-context.png */,
+				961E05B42528949700C15C4C /* README.md */,
+			);
+			path = DomainModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
