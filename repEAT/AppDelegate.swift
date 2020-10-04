@@ -55,9 +55,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                  */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
+            
+            // TODO: Remove this after full database was setup
+            self.seedSampleData(context: container.viewContext)
         })
         return container
     }()
+    
+    private func seedSampleData(context: NSManagedObjectContext) {
+        // swiftlint:disable line_length
+        let userDefaultsKey = "SampleDBInitializedKey"
+        guard !UserDefaults.standard.bool(forKey: userDefaultsKey) else {
+            return
+        }
+        
+        let recipe = Recipe(context: context)
+        recipe.name = "Spaghetti Carbonara"
+        recipe.image = UIImage(named: "spaghetti-carbonara")
+        
+        recipe.addIngredient(Food("Spaghetti", into: context), quantity: 8.0, unit: "oz")
+        recipe.addIngredient(Food("Eggs", into: context), quantity: 2.0, unit: "pc")
+        recipe.addIngredient(Food("Parmesan", into: context), quantity: 0.5, unit: "cups")
+        recipe.addIngredient(Food("Bacon", into: context), quantity: 4, unit: "slices")
+        recipe.addIngredient(Food("Salt", into: context))
+        
+        recipe.addDirection("In a large pot of boiling salted water, cook pasta according to package instructions; reserve 1/2 cup water and drain well.")
+        recipe.addDirection("In a small bowl, whisk together eggs and Parmesan; set aside.")
+        recipe.addDirection("Heat a large skillet over medium high heat. Add bacon and cook until brown and crispy, about 6-8 minutes; reserve excess fat.")
+        recipe.addDirection("Stir in garlic until fragrant, about 1 minute. Reduce heat to low.")
+        recipe.addDirection("Working quickly, stir in pasta and egg mixture, and gently toss to combine; season with salt and pepper, to taste. Add reserved pasta water, one tablespoon at a time, until desired consistency is reached.")
+        recipe.addDirection("Serve immediately, garnished with parsley, if desired.")
+        
+        do {
+            try context.save()
+            UserDefaults.standard.set(true, forKey: userDefaultsKey)
+        } catch {
+        }
+        // swiftlint:enable line_length
+    }
 
     // MARK: - Core Data Saving support
 
