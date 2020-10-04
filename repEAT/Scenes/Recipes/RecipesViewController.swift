@@ -39,6 +39,8 @@ class RecipesViewController: UITableViewController {
         }
     }
     
+    // MARK: Table View Data Source
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
@@ -52,7 +54,9 @@ class RecipesViewController: UITableViewController {
         
         return cell
     }
-
+    
+    // MARK: Actions
+    
     @IBAction func addItemPressed(_ sender: Any) {
     }
     
