@@ -10,22 +10,25 @@ import CoreData
 
 class RecipeViewController: UITableViewController {
     
-    var managedObjectContext: NSManagedObjectContext!
-    
-    var recipe: Recipe! {
-        didSet {
-            title = recipe.name
-        }
-    }
+    var recipe: Recipe?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        setupNavBar()
+        setupTableView()
+    }
+    
+    private func setupNavBar() {
+        title = recipe?.name
+    }
+    
+    private func setupTableView() {
+        guard let image = recipe?.image else {
+            return
+        }
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200))
+        imageView.image = image
+        tableView.tableHeaderView = imageView
     }
 
     // MARK: - Table view data source

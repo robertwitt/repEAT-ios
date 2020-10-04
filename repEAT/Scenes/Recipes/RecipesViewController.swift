@@ -58,7 +58,6 @@ class RecipesViewController: UITableViewController {
         
         let recipe = fetchedResultsController.object(at: indexPath)
         viewController.recipe = recipe
-        viewController.managedObjectContext = managedObjectContext
     }
     
     // MARK: Table View Data Source
