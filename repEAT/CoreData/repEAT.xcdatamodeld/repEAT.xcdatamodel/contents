@@ -16,6 +16,8 @@
         <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Recipe" inverseName="preparationSteps" inverseEntity="Recipe"/>
     </entity>
     <entity name="Recipe" representedClassName="Recipe" syncable="YES" codeGenerationType="class">
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ingredient" inverseName="recipe" inverseEntity="Ingredient"/>
         <relationship name="preparationSteps" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PreparationStep" inverseName="recipe" inverseEntity="PreparationStep"/>
     </entity>
@@ -23,6 +25,6 @@
         <element name="Food" positionX="156.171875" positionY="1.76953125" width="128" height="73"/>
         <element name="Ingredient" positionX="-261.2421875" positionY="1.37109375" width="128" height="103"/>
         <element name="PreparationStep" positionX="-309.03125" positionY="159.06640625" width="128" height="88"/>
-        <element name="Recipe" positionX="-472.109375" positionY="4.94140625" width="128" height="73"/>
+        <element name="Recipe" positionX="-472.109375" positionY="4.94140625" width="128" height="103"/>
     </elements>
 </model>
