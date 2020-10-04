@@ -7,11 +7,14 @@
 
 import UIKit
 
-class RecipesViewController: UIViewController {
+class RecipesViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
 
+    @IBAction func addItemPressed(_ sender: Any) {
+    }
+    
 }
