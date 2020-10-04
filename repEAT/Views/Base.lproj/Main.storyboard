@@ -32,6 +32,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Q4U-tM-vKS" kind="show" identifier="RecipeSegue" id="dcE-Vi-2Sh"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -50,6 +53,32 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vj1-lK-jnT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1086.9565217391305" y="49.553571428571423"/>
+        </scene>
+        <!--Recipe View Controller-->
+        <scene sceneID="8AH-nK-lao">
+            <objects>
+                <tableViewController id="Q4U-tM-vKS" customClass="RecipeViewController" customModule="repEAT" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="3ZZ-ij-PWq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="Q4U-tM-vKS" id="Ksm-2z-8Jk"/>
+                            <outlet property="delegate" destination="Q4U-tM-vKS" id="Ttf-x2-frx"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="1ku-cv-wZg">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="raE-Xj-wXf">
+                            <connections>
+                                <action selector="editItemPressed:" destination="wmb-9b-74h" id="Vi8-9e-nCr"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WEe-iL-RK3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="wmb-9b-74h" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2009" y="50"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sR2-sj-jqr">

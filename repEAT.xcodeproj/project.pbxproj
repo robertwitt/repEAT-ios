@@ -16,6 +16,7 @@
 		961E056B25288B1B00C15C4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 961E056925288B1B00C15C4C /* LaunchScreen.storyboard */; };
 		961E057625288B1C00C15C4C /* repEATTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E057525288B1C00C15C4C /* repEATTests.swift */; };
 		961E058125288B1C00C15C4C /* repEATUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E058025288B1C00C15C4C /* repEATUITests.swift */; };
+		96896ED32529E14600D4816B /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96896ED22529E14600D4816B /* RecipeViewController.swift */; };
 		96D35CD52529CDB800D1CBD8 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D35CD42529CDB800D1CBD8 /* Recipe.swift */; };
 		96D35CDA2529D11600D1CBD8 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D35CD92529D11600D1CBD8 /* Food.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		961E05B22528947500C15C4C /* shared-kernel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shared-kernel.png"; sourceTree = "<group>"; };
 		961E05B32528947500C15C4C /* recipe-context.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipe-context.png"; sourceTree = "<group>"; };
 		961E05B42528949700C15C4C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		96896ED22529E14600D4816B /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
 		96D35CD42529CDB800D1CBD8 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		96D35CD92529D11600D1CBD8 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				961E055F25288B1A00C15C4C /* RecipesViewController.swift */,
+				96896ED22529E14600D4816B /* RecipeViewController.swift */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 			files = (
 				961E056625288B1A00C15C4C /* repEAT.xcdatamodeld in Sources */,
 				961E056025288B1A00C15C4C /* RecipesViewController.swift in Sources */,
+				96896ED32529E14600D4816B /* RecipeViewController.swift in Sources */,
 				961E055C25288B1A00C15C4C /* AppDelegate.swift in Sources */,
 				961E055E25288B1A00C15C4C /* SceneDelegate.swift in Sources */,
 				96D35CD52529CDB800D1CBD8 /* Recipe.swift in Sources */,
