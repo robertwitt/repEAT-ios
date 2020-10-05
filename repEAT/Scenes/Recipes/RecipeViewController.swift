@@ -42,7 +42,7 @@ class RecipeViewController: UITableViewController {
         tableView.tableHeaderView = imageView
     }
 
-    // MARK: - Table view data source
+    // MARK: Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return recipeController?.numberOfSections ?? 0
@@ -93,10 +93,5 @@ class RecipeViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    // MARK: Actions
-    
-    @IBAction func editItemPressed(_ sender: Any) {
-    }
     
 }
