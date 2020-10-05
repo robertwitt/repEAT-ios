@@ -21,12 +21,34 @@ extension Recipe {
         }
     }
     
+    var sortedIngredients: [Ingredient] {
+        let sortDescriptor = NSSortDescriptor(key: "food", ascending: true) { (food1, food2) -> ComparisonResult in
+            guard let food1 = food1 as? Food, let food2 = food2 as? Food else {
+                return .orderedSame
+            }
+            if food1.name == food2.name {
+                return .orderedSame
+            } else if food1.name ?? "" < food2.name ?? "" {
+                return .orderedAscending
+            } else {
+                return .orderedDescending
+            }
+        }
+        
+        return ingredients?.sortedArray(using: [sortDescriptor]) as? [Ingredient] ?? []
+    }
+    
     func addIngredient(_ food: Food, quantity: Float = 0.0, unit: String? = nil) {
         let ingredient = Ingredient(context: managedObjectContext!)
         ingredient.food = food
         ingredient.quantity = quantity
         ingredient.unit = unit
         addToIngredients(ingredient)
+    }
+    
+    var sortedDirections: [Direction] {
+        let sortDescriptor = NSSortDescriptor(key: "orderNumber", ascending: true)
+        return directions?.sortedArray(using: [sortDescriptor]) as? [Direction] ?? []
     }
     
     func addDirection(_ depiction: String) {

@@ -39,6 +39,27 @@ class RecipesViewController: UITableViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "RecipeSegue":
+            prepareRecipeViewController(for: segue, sender: sender)
+        default:
+            break
+        }
+    }
+    
+    private func prepareRecipeViewController(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let viewController = segue.destination as? RecipeViewController else {
+            return
+        }
+        guard let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) else {
+            return
+        }
+        
+        let recipe = fetchedResultsController.object(at: indexPath)
+        viewController.recipe = recipe
+    }
+    
     // MARK: Table View Data Source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
