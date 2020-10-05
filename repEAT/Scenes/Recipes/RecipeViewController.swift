@@ -53,19 +53,36 @@ class RecipeViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return recipeController?.numberOfRows(in: section) ?? 0
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        switch RecipeController.Section(rawValue: indexPath.section) {
+        case .ingredients:
+            return ingredientCell(forRowAt: indexPath)
+        case.directions:
+            return directionCell(forRowAt: indexPath)
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    private func ingredientCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        let ingredient = recipeController?.ingredient(at: indexPath.row)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
+        cell.textLabel?.text = ingredient?.formattedQuantityWithUnit
+        cell.detailTextLabel?.text = ingredient?.food?.name
+        
         return cell
     }
-    */
+    
+    private func directionCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        let direction = recipeController?.direction(at: indexPath.row)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DirectionCell", for: indexPath)
+        cell.textLabel?.text = direction?.depiction
+        return cell
+    }
 
     /*
     // MARK: - Navigation

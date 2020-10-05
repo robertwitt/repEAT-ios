@@ -9,6 +9,12 @@ import UIKit
 
 class RecipeController {
     
+    enum Section: Int {
+        case ingredients = 0
+        case directions = 1
+        static let count = 2
+    }
+    
     let recipe: Recipe
     
     init(with recipe: Recipe) {
@@ -40,11 +46,15 @@ class RecipeController {
             return 0
         }
     }
+    
+    func ingredient(at index: Int) -> Ingredient? {
+        let ingredients = recipe.sortedIngredients
+        return ingredients.indices.contains(index) ? ingredients[index] : nil
+    }
+    
+    func direction(at index: Int) -> Direction? {
+        let directions = recipe.sortedDirections
+        return directions.indices.contains(index) ? directions[index] : nil
+    }
 
-}
-
-private enum Section: Int {
-    case ingredients = 0
-    case directions = 1
-    static let count = 2
 }
