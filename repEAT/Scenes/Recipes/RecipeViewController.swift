@@ -26,20 +26,25 @@ class RecipeViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        setupTableView()
+        setupTableViewHeader()
+        registerTableViewCells()
     }
     
     private func setupNavBar() {
         navigationItem.rightBarButtonItem = editButtonItem
     }
     
-    private func setupTableView() {
+    private func setupTableViewHeader() {
         guard let image = recipe?.image else {
             return
         }
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200))
         imageView.image = image
         tableView.tableHeaderView = imageView
+    }
+    
+    private func registerTableViewCells() {
+        EditableTableViewCell.register(in: tableView, reuseIdentifier: EditableTableViewCell.reuseIdentifier)
     }
 
     // MARK: Table View Data Source
@@ -70,8 +75,15 @@ class RecipeViewController: UITableViewController {
     }
     
     private func detailsCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DetailsCell", for: indexPath)
-        cell.textLabel?.text = recipe?.name
+        // swiftlint:disable force_cast
+        let cell = tableView.dequeueReusableCell(withIdentifier: EditableTableViewCell.reuseIdentifier, for: indexPath) as! EditableTableViewCell
+        // swiftlint:enable force_cast
+        cell.textField.text = recipe?.name
+        cell.textField.placeholder = NSLocalizedString("placeholderRecipeName", comment: "")
+        cell.textChangedHandler = { (recipeName) in
+            self.recipe?.name = recipeName
+        }
+        
         return cell
     }
     
