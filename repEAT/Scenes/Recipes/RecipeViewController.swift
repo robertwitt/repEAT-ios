@@ -10,18 +10,16 @@ import CoreData
 
 class RecipeViewController: UITableViewController {
     
-    var recipe: Recipe? {
+    var recipe: Recipe {
         get {
-            return recipeController?.recipe
+            return recipeController.recipe
         }
         set {
-            if let recipe = newValue {
-                recipeController = RecipeController(with: recipe)
-            }
+            recipeController = RecipeController(with: newValue)
         }
     }
     
-    private var recipeController: RecipeController?
+    private var recipeController: RecipeController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +33,7 @@ class RecipeViewController: UITableViewController {
     }
     
     private func setupTableViewHeader() {
-        guard let image = recipe?.image else {
+        guard let image = recipe.image else {
             return
         }
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200))
@@ -50,15 +48,15 @@ class RecipeViewController: UITableViewController {
     // MARK: Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return recipeController?.numberOfSections ?? 0
+        return recipeController.numberOfSections
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return recipeController?.headerTitle(of: section)
+        return recipeController.headerTitle(of: section)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipeController?.numberOfObjects(in: section) ?? 0
+        return recipeController.numberOfObjects(in: section)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -78,17 +76,17 @@ class RecipeViewController: UITableViewController {
         // swiftlint:disable force_cast
         let cell = tableView.dequeueReusableCell(withIdentifier: EditableTableViewCell.reuseIdentifier, for: indexPath) as! EditableTableViewCell
         // swiftlint:enable force_cast
-        cell.textField.text = recipe?.name
+        cell.textField.text = recipe.name
         cell.textField.placeholder = NSLocalizedString("placeholderRecipeName", comment: "")
         cell.textChangedHandler = { (recipeName) in
-            self.recipe?.name = recipeName
+            self.recipe.name = recipeName
         }
         
         return cell
     }
     
     private func ingredientCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ingredient = recipeController?.ingredient(at: indexPath.row)
+        let ingredient = recipeController.ingredient(at: indexPath.row)
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "IngredientCell", for: indexPath)
         cell.textLabel?.text = ingredient?.formattedQuantityWithUnit
@@ -98,21 +96,27 @@ class RecipeViewController: UITableViewController {
     }
     
     private func directionCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
-        let direction = recipeController?.direction(at: indexPath.row)
+        let direction = recipeController.direction(at: indexPath.row)
         let cell = tableView.dequeueReusableCell(withIdentifier: "DirectionCell", for: indexPath)
         cell.textLabel?.text = direction?.depiction
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return recipeController?.canDeleteObject(at: indexPath) ?? false
-    }
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            recipeController?.deleteObject(at: indexPath)
+            recipeController.deleteObject(at: indexPath)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
+    }
+    
+    // MARK: Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return recipeController.canDeleteObject(at: indexPath) ? .delete : .none
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return recipeController.canDeleteObject(at: indexPath)
     }
 
     /*
