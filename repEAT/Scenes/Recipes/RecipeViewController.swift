@@ -20,6 +20,12 @@ class RecipeViewController: UITableViewController {
     }
     
     private var recipeController: RecipeController!
+    
+    private var cancelButtonItem: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .cancel,
+                               target: self,
+                               action: #selector(cancelItemPressed))
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +49,17 @@ class RecipeViewController: UITableViewController {
     
     private func registerTableViewCells() {
         EditableTableViewCell.register(in: tableView, reuseIdentifier: EditableTableViewCell.reuseIdentifier)
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        navigationItem.leftBarButtonItem = editing ? cancelButtonItem : nil
+    }
+    
+    @objc private func cancelItemPressed() {
+        setEditing(false, animated: true)
+        recipeController.discardChanges()
+        tableView.reloadData()
     }
 
     // MARK: Table View Data Source
