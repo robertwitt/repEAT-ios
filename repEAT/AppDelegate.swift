@@ -86,6 +86,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         recipe.addDirection("Working quickly, stir in pasta and egg mixture, and gently toss to combine; season with salt and pepper, to taste. Add reserved pasta water, one tablespoon at a time, until desired consistency is reached.")
         recipe.addDirection("Serve immediately, garnished with parsley, if desired.")
         
+        let emptyRecipe = Recipe(context: context)
+        emptyRecipe.name = "Vitamin Shake"
+        
         do {
             try context.save()
             UserDefaults.standard.set(true, forKey: userDefaultsKey)
