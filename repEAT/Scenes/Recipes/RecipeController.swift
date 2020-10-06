@@ -5,7 +5,7 @@
 //  Created by Witt, Robert on 04.10.20.
 //
 
-import UIKit
+import CoreData
 
 class RecipeController {
     
@@ -16,6 +16,10 @@ class RecipeController {
     }
     
     let recipe: Recipe
+    
+    private var managedObjectContext: NSManagedObjectContext {
+        return recipe.managedObjectContext!
+    }
     
     init(with recipe: Recipe) {
         self.recipe = recipe
@@ -45,7 +49,7 @@ class RecipeController {
         }
     }
     
-    func numberOfRows(in section: Int) -> Int {
+    func numberOfObjects(in section: Int) -> Int {
         switch Section(rawValue: section) {
         case .details:
             return 1
@@ -66,6 +70,40 @@ class RecipeController {
     func direction(at index: Int) -> Direction? {
         let directions = recipe.sortedDirections
         return directions.indices.contains(index) ? directions[index] : nil
+    }
+    
+    func canDeleteObject(at indexPath: IndexPath) -> Bool {
+        if Section(rawValue: indexPath.section) == .details {
+            return false
+        }
+        return true
+    }
+    
+    func deleteObject(at indexPath: IndexPath) {
+        switch Section(rawValue: indexPath.section) {
+        case .ingredients:
+            deleteIngredient(at: indexPath.row)
+        case .directions:
+            deleteDirection(at: indexPath.row)
+        default:
+            break
+        }
+    }
+    
+    private func deleteIngredient(at index: Int) {
+        guard let ingredient = self.ingredient(at: index) else {
+            return
+        }
+        recipe.removeFromIngredients(ingredient)
+        managedObjectContext.delete(ingredient)
+    }
+    
+    private func deleteDirection(at index: Int) {
+        guard let direction = self.direction(at: index) else {
+            return
+        }
+        recipe.removeFromDirections(direction)
+        managedObjectContext.delete(direction)
     }
 
 }

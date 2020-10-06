@@ -58,7 +58,7 @@ class RecipeViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipeController?.numberOfRows(in: section) ?? 0
+        return recipeController?.numberOfObjects(in: section) ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -102,6 +102,17 @@ class RecipeViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DirectionCell", for: indexPath)
         cell.textLabel?.text = direction?.depiction
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return recipeController?.canDeleteObject(at: indexPath) ?? false
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            recipeController?.deleteObject(at: indexPath)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
     }
 
     /*
