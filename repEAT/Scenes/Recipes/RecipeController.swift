@@ -10,9 +10,9 @@ import UIKit
 class RecipeController {
     
     enum Section: Int {
-        case ingredients = 0
-        case directions = 1
-        static let count = 2
+        case details = 0
+        case ingredients = 1
+        case directions = 2
     }
     
     let recipe: Recipe
@@ -22,11 +22,20 @@ class RecipeController {
     }
     
     var numberOfSections: Int {
-        return Section.count
+        var count = 1
+        if recipe.ingredients?.count ?? 0 > 0 {
+            count += 1
+        }
+        if recipe.directions?.count ?? 00 > 0 {
+            count += 1
+        }
+        return count
     }
     
     func headerTitle(of section: Int) -> String? {
         switch Section(rawValue: section) {
+        case .details:
+            return NSLocalizedString("titleDetails", comment: "")
         case .ingredients:
             return NSLocalizedString("titleIngredients", comment: "")
         case .directions:
@@ -38,6 +47,8 @@ class RecipeController {
     
     func numberOfRows(in section: Int) -> Int {
         switch Section(rawValue: section) {
+        case .details:
+            return 1
         case .ingredients:
             return recipe.ingredients?.count ?? 0
         case .directions:

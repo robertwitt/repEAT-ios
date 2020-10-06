@@ -30,7 +30,7 @@ class RecipeViewController: UITableViewController {
     }
     
     private func setupNavBar() {
-        title = recipe?.name
+        navigationItem.rightBarButtonItem = editButtonItem
     }
     
     private func setupTableView() {
@@ -58,6 +58,8 @@ class RecipeViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch RecipeController.Section(rawValue: indexPath.section) {
+        case .details:
+            return detailsCell(forRowAt: indexPath)
         case .ingredients:
             return ingredientCell(forRowAt: indexPath)
         case.directions:
@@ -65,6 +67,12 @@ class RecipeViewController: UITableViewController {
         default:
             return UITableViewCell()
         }
+    }
+    
+    private func detailsCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DetailsCell", for: indexPath)
+        cell.textLabel?.text = recipe?.name
+        return cell
     }
     
     private func ingredientCell(forRowAt indexPath: IndexPath) -> UITableViewCell {

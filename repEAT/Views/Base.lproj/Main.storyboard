@@ -54,7 +54,7 @@
             </objects>
             <point key="canvasLocation" x="1086.9565217391305" y="49.553571428571423"/>
         </scene>
-        <!--Recipe View Controller-->
+        <!--Recipe-->
         <scene sceneID="8AH-nK-lao">
             <objects>
                 <tableViewController id="Q4U-tM-vKS" customClass="RecipeViewController" customModule="repEAT" customModuleProvider="target" sceneMemberID="viewController">
@@ -63,8 +63,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="IngredientCell" textLabel="QjH-gm-4l6" detailTextLabel="XK2-sG-NtT" style="IBUITableViewCellStyleValue2" id="O7v-bV-RZs">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailsCell" textLabel="FmK-En-hqB" style="IBUITableViewCellStyleDefault" id="diS-yw-AbZ">
                                 <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="diS-yw-AbZ" id="1v3-83-sr0">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FmK-En-hqB">
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="IngredientCell" textLabel="QjH-gm-4l6" detailTextLabel="XK2-sG-NtT" style="IBUITableViewCellStyleValue2" id="O7v-bV-RZs">
+                                <rect key="frame" x="0.0" y="99" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="O7v-bV-RZs" id="f2d-Se-cxV">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -88,7 +105,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DirectionCell" textLabel="Dda-KN-2Cp" style="IBUITableViewCellStyleDefault" id="X1L-cS-Quy">
-                                <rect key="frame" x="0.0" y="99" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="142.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="X1L-cS-Quy" id="n2C-SA-wtg">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -110,16 +127,9 @@
                             <outlet property="delegate" destination="Q4U-tM-vKS" id="Ttf-x2-frx"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="1ku-cv-wZg">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="raE-Xj-wXf">
-                            <connections>
-                                <action selector="editItemPressed:" destination="wmb-9b-74h" id="Vi8-9e-nCr"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Recipe" id="1ku-cv-wZg"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WEe-iL-RK3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="wmb-9b-74h" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2009" y="50"/>
         </scene>
