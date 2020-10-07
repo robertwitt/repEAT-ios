@@ -58,7 +58,6 @@ class RecipesViewController: UITableViewController {
         
         let recipe = fetchedResultsController.object(at: indexPath)
         viewController.recipe = recipe
-        viewController.delegate = self
     }
     
     // MARK: Table View Data Source
@@ -80,14 +79,6 @@ class RecipesViewController: UITableViewController {
     // MARK: Actions
     
     @IBAction func addItemPressed(_ sender: Any) {
-    }
-    
-}
-
-extension RecipesViewController: RecipeViewControllerDelegate {
-    
-    func recipeViewControllerDidCancelEditing(_ viewController: RecipeViewController) {
-        managedObjectContext.rollback()
     }
     
 }

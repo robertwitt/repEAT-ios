@@ -105,5 +105,9 @@ class RecipeController {
         recipe.removeFromDirections(direction)
         managedObjectContext.delete(direction)
     }
+    
+    func discardChanges() {
+        managedObjectContext.rollback()
+    }
 
 }

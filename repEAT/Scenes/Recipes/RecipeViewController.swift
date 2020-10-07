@@ -10,8 +10,6 @@ import CoreData
 
 class RecipeViewController: UITableViewController {
     
-    weak var delegate: RecipeViewControllerDelegate?
-    
     var recipe: Recipe {
         get {
             return recipeController.recipe
@@ -60,9 +58,9 @@ class RecipeViewController: UITableViewController {
     }
     
     @objc private func cancelItemPressed() {
-        delegate?.recipeViewControllerDidCancelEditing(self)
-        tableView.reloadData()
         setEditing(false, animated: true)
+        recipeController.discardChanges()
+        tableView.reloadData()
     }
 
     // MARK: Table View Data Source
@@ -157,17 +155,5 @@ class RecipeViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-}
-
-protocol RecipeViewControllerDelegate: class {
-    
-    func recipeViewControllerDidCancelEditing(_ viewController: RecipeViewController)
-    
-}
-
-extension RecipeViewControllerDelegate {
-    
-    func recipeViewControllerDidCancelEditing(_ viewController: RecipeViewController) {}
     
 }
