@@ -10,6 +10,8 @@ import CoreData
 
 class RecipeViewController: UITableViewController {
     
+    weak var delegate: RecipeViewControllerDelegate?
+    
     var recipe: Recipe {
         get {
             return recipeController.recipe
@@ -48,7 +50,8 @@ class RecipeViewController: UITableViewController {
     }
     
     private func registerTableViewCells() {
-        EditableTableViewCell.register(in: tableView, reuseIdentifier: EditableTableViewCell.reuseIdentifier)
+        TextFieldTableViewCell.register(in: tableView, reuseIdentifier: TextFieldTableViewCell.reuseIdentifier)
+        TextViewTableViewCell.register(in: tableView, reuseIdentifier: TextViewTableViewCell.reuseIdentifier)
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -57,9 +60,9 @@ class RecipeViewController: UITableViewController {
     }
     
     @objc private func cancelItemPressed() {
-        setEditing(false, animated: true)
-        recipeController.discardChanges()
+        delegate?.recipeViewControllerDidCancelEditing(self)
         tableView.reloadData()
+        setEditing(false, animated: true)
     }
 
     // MARK: Table View Data Source
@@ -91,7 +94,7 @@ class RecipeViewController: UITableViewController {
     
     private func detailsCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
         // swiftlint:disable force_cast
-        let cell = tableView.dequeueReusableCell(withIdentifier: EditableTableViewCell.reuseIdentifier, for: indexPath) as! EditableTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.reuseIdentifier, for: indexPath) as! TextFieldTableViewCell
         // swiftlint:enable force_cast
         cell.textField.text = recipe.name
         cell.textField.placeholder = NSLocalizedString("placeholderRecipeName", comment: "")
@@ -114,8 +117,17 @@ class RecipeViewController: UITableViewController {
     
     private func directionCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
         let direction = recipeController.direction(at: indexPath.row)
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DirectionCell", for: indexPath)
-        cell.textLabel?.text = direction?.depiction
+        
+        // swiftlint:disable force_cast
+        let cell = tableView.dequeueReusableCell(withIdentifier: TextViewTableViewCell.reuseIdentifier, for: indexPath) as! TextViewTableViewCell
+        // swiftlint:enable force_cast
+        cell.textView.text = direction?.depiction
+        cell.textChangedHandler = { (depiction) in
+            direction?.depiction = depiction
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
+        
         return cell
     }
     
@@ -145,5 +157,17 @@ class RecipeViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+}
+
+protocol RecipeViewControllerDelegate: class {
+    
+    func recipeViewControllerDidCancelEditing(_ viewController: RecipeViewController)
+    
+}
+
+extension RecipeViewControllerDelegate {
+    
+    func recipeViewControllerDidCancelEditing(_ viewController: RecipeViewController) {}
     
 }

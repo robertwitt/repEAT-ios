@@ -21,8 +21,6 @@ class RecipeController {
         return recipe.managedObjectContext!
     }
     
-    private var deletedObjects = [NSManagedObject]()
-    
     init(with recipe: Recipe) {
         self.recipe = recipe
     }
@@ -97,7 +95,6 @@ class RecipeController {
             return
         }
         recipe.removeFromIngredients(ingredient)
-        deletedObjects.append(ingredient)
         managedObjectContext.delete(ingredient)
     }
     
@@ -106,16 +103,7 @@ class RecipeController {
             return
         }
         recipe.removeFromDirections(direction)
-        deletedObjects.append(direction)
         managedObjectContext.delete(direction)
-    }
-    
-    func discardChanges() {
-        let deletedObjects = self.deletedObjects + [recipe]
-        deletedObjects.forEach { (object) in
-            managedObjectContext.refresh(object, mergeChanges: false)
-        }
-        self.deletedObjects.removeAll()
     }
 
 }
