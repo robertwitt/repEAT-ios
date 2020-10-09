@@ -17,6 +17,7 @@ class TextViewTableViewCell: UITableViewCell {
     }
     
     var textChangedHandler: ((String?) -> Void)?
+    var textEditingEndedHandler: ((String?) -> Void)?
     
     @IBOutlet weak var textView: UITextView!
 
@@ -30,11 +31,6 @@ class TextViewTableViewCell: UITableViewCell {
         textView.delegate = self
         textView.isEditable = isEditing
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        textView.becomeFirstResponder()
-    }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
@@ -47,6 +43,10 @@ extension TextViewTableViewCell: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         textChangedHandler?(textView.text)
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        textEditingEndedHandler?(textView.text)
     }
     
 }

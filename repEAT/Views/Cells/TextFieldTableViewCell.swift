@@ -30,11 +30,6 @@ class TextFieldTableViewCell: UITableViewCell {
         textField.delegate = self
         textField.isEnabled = isEditing
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        textField.becomeFirstResponder()
-    }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)

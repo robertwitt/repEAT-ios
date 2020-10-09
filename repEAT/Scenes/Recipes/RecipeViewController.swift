@@ -55,12 +55,13 @@ class RecipeViewController: UITableViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         navigationItem.leftBarButtonItem = editing ? cancelButtonItem : nil
+        recipeController.isEditing = editing
+        tableView.reloadData()
     }
     
     @objc private func cancelItemPressed() {
-        setEditing(false, animated: true)
         recipeController.discardChanges()
-        tableView.reloadData()
+        setEditing(false, animated: true)
     }
 
     // MARK: Table View Data Source
@@ -74,7 +75,11 @@ class RecipeViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipeController.numberOfObjects(in: section)
+        var numberOfRows = recipeController.numberOfObjects(in: section)
+        if isEditing && RecipeController.Section(rawValue: section) != .details {
+            numberOfRows += 1
+        }
+        return numberOfRows
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,19 +119,51 @@ class RecipeViewController: UITableViewController {
     }
     
     private func directionCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
-        let direction = recipeController.direction(at: indexPath.row)
-        
+        if let direction = recipeController.direction(at: indexPath.row) {
+            return updateDirectionCell(forRowAt: indexPath, direction: direction)
+        } else {
+            return createDirectionCell(forRowAt: indexPath)
+        }
+    }
+    
+    private func updateDirectionCell(forRowAt indexPath: IndexPath, direction: Direction) -> UITableViewCell {
         // swiftlint:disable force_cast
         let cell = tableView.dequeueReusableCell(withIdentifier: TextViewTableViewCell.reuseIdentifier, for: indexPath) as! TextViewTableViewCell
         // swiftlint:enable force_cast
-        cell.textView.text = direction?.depiction
+        cell.textView.text = direction.depiction
         cell.textChangedHandler = { (depiction) in
-            direction?.depiction = depiction
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
+            direction.depiction = depiction
+            self.updateTableView()
         }
         
         return cell
+    }
+    
+    private func createDirectionCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        // swiftlint:disable force_cast
+        let cell = tableView.dequeueReusableCell(withIdentifier: TextViewTableViewCell.reuseIdentifier, for: indexPath) as! TextViewTableViewCell
+        // swiftlint:enable force_cast
+        cell.textChangedHandler = { (_) in
+            self.updateTableView()
+        }
+        cell.textEditingEndedHandler = { (depiction) in
+            if let depiction = depiction, !depiction.isEmpty {
+                self.recipeController.addDirection(depiction)
+                self.insertEmptyRow(after: indexPath)
+            }
+        }
+        
+        return cell
+    }
+    
+    private func insertEmptyRow(after indexPath: IndexPath) {
+        self.tableView.insertRows(at: [IndexPath(row: indexPath.row + 1, section: indexPath.section)],
+                                  with: .automatic)
+    }
+    
+    private func updateTableView() {
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -143,7 +180,7 @@ class RecipeViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return recipeController.canDeleteObject(at: indexPath)
+        return !recipeController.isDetailsSection(indexPath.section)
     }
 
     /*

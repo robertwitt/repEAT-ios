@@ -13,9 +13,11 @@ class RecipeController {
         case details = 0
         case ingredients = 1
         case directions = 2
+        static let count = 3
     }
     
     let recipe: Recipe
+    var isEditing = false
     
     private var managedObjectContext: NSManagedObjectContext {
         return recipe.managedObjectContext!
@@ -26,6 +28,14 @@ class RecipeController {
     }
     
     var numberOfSections: Int {
+        return isEditing ? numberOfSectionsInEditMode : numberOfSectionsInDisplayMode
+    }
+    
+    private var numberOfSectionsInEditMode: Int {
+        return Section.count
+    }
+    
+    private var numberOfSectionsInDisplayMode: Int {
         var count = 1
         if recipe.ingredients?.count ?? 0 > 0 {
             count += 1
@@ -34,6 +44,10 @@ class RecipeController {
             count += 1
         }
         return count
+    }
+    
+    func isDetailsSection(_ section: Int) -> Bool {
+        return Section(rawValue: section) == .details
     }
     
     func headerTitle(of section: Int) -> String? {
@@ -72,11 +86,21 @@ class RecipeController {
         return directions.indices.contains(index) ? directions[index] : nil
     }
     
+    func addDirection(_ depiction: String) {
+        recipe.addDirection(depiction)
+    }
+    
     func canDeleteObject(at indexPath: IndexPath) -> Bool {
-        if Section(rawValue: indexPath.section) == .details {
+        switch Section(rawValue: indexPath.section) {
+        case .details:
             return false
+        case .ingredients:
+            return ingredient(at: indexPath.row) != nil
+        case .directions:
+            return direction(at: indexPath.row) != nil
+        default:
+            return true
         }
-        return true
     }
     
     func deleteObject(at indexPath: IndexPath) {
