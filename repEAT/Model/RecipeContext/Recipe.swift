@@ -46,6 +46,11 @@ extension Recipe {
         addToIngredients(ingredient)
     }
     
+    func deleteIngredient(_ ingredient: Ingredient) {
+        removeFromIngredients(ingredient)
+        managedObjectContext?.delete(ingredient)
+    }
+    
     var sortedDirections: [Direction] {
         let sortDescriptor = NSSortDescriptor(key: "orderNumber", ascending: true)
         return directions?.sortedArray(using: [sortDescriptor]) as? [Direction] ?? []
@@ -58,8 +63,10 @@ extension Recipe {
         addToDirections(step)
     }
     
-    func removeDirection(_ direction: Direction) {
+    func deleteDirection(_ direction: Direction) {
         removeFromDirections(direction)
+        managedObjectContext?.delete(direction)
+        
         var order: Int16 = 1
         sortedDirections.forEach { (remainingDirection) in
             remainingDirection.orderNumber = order

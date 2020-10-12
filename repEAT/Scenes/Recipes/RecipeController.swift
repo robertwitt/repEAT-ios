@@ -46,10 +46,6 @@ class RecipeController {
         return count
     }
     
-    func isDetailsSection(_ section: Int) -> Bool {
-        return Section(rawValue: section) == .details
-    }
-    
     func headerTitle(of section: Int) -> String? {
         switch Section(rawValue: section) {
         case .details:
@@ -64,6 +60,23 @@ class RecipeController {
     }
     
     func numberOfObjects(in section: Int) -> Int {
+        return isEditing ? numberOfObjectsInEditMode(in: section) : numberOfObjectsInDisplayMode(in: section)
+    }
+    
+    private func numberOfObjectsInEditMode(in section: Int) -> Int {
+        switch Section(rawValue: section) {
+        case .details:
+            return 1
+        case .ingredients:
+            return (recipe.ingredients?.count ?? 0) + 1
+        case .directions:
+            return (recipe.directions?.count ?? 0) + 1
+        default:
+            return 0
+        }
+    }
+    
+    private func numberOfObjectsInDisplayMode(in section: Int) -> Int {
         switch Section(rawValue: section) {
         case .details:
             return 1
@@ -124,28 +137,24 @@ class RecipeController {
     }
     
     private func deleteIngredient(at index: Int) {
-        guard let ingredient = self.ingredient(at: index) else {
-            return
+        if let ingredient = self.ingredient(at: index) {
+            recipe.deleteIngredient(ingredient)
         }
-        recipe.removeFromIngredients(ingredient)
-        managedObjectContext.delete(ingredient)
     }
     
     private func deleteDirection(at index: Int) {
-        guard let direction = self.direction(at: index) else {
-            return
+        if let direction = self.direction(at: index) {
+            recipe.deleteDirection(direction)
         }
-        recipe.removeDirection(direction)
-        managedObjectContext.delete(direction)
     }
     
     func saveChanges() {
-        do {
-            if managedObjectContext.hasChanges {
+        if managedObjectContext.hasChanges {
+            do {
                 try managedObjectContext.save()
+            } catch {
+                // TODO Error handling
             }
-        } catch {
-            // TODO Error handling
         }
     }
     

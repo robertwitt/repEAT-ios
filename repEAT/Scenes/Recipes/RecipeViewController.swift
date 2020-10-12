@@ -78,11 +78,7 @@ class RecipeViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var numberOfRows = recipeController.numberOfObjects(in: section)
-        if isEditing && RecipeController.Section(rawValue: section) != .details {
-            numberOfRows += 1
-        }
-        return numberOfRows
+        return recipeController.numberOfObjects(in: section)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -160,7 +156,7 @@ class RecipeViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return !recipeController.isDetailsSection(indexPath.section)
+        return indexPath.section != RecipeController.Section.details.rawValue
     }
 
     /*
