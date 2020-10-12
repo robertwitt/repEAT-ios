@@ -66,15 +66,25 @@ extension Recipe {
     func deleteDirection(_ direction: Direction) {
         removeFromDirections(direction)
         managedObjectContext?.delete(direction)
-        reorderDirections()
+        reorderDirections(sortedDirections)
     }
     
-    private func reorderDirections() {
+    private func reorderDirections(_ directions: [Direction]) {
         var order: Int16 = 1
-        sortedDirections.forEach { (remainingDirection) in
+        directions.forEach { (remainingDirection) in
             remainingDirection.orderNumber = order
             order += 1
         }
+    }
+    
+    func moveDirection(at sourceIndex: Int, to targetIndex: Int) {
+        var directions = sortedDirections
+        let direction = directions[sourceIndex]
+        directions.removeAll { (object) -> Bool in
+            return object == direction
+        }
+        directions.insert(direction, at: targetIndex)
+        reorderDirections(directions)
     }
     
 }

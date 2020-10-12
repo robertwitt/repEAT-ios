@@ -155,7 +155,8 @@ class RecipeViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
+        recipeController.moveObject(at: sourceIndexPath, to: destinationIndexPath)
+        tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
     }
     
     // MARK: Table View Delegate
