@@ -5,7 +5,7 @@
 //  Created by Witt, Robert on 04.10.20.
 //
 
-import UIKit
+import CoreData
 
 class RecipeController {
     
@@ -13,15 +13,29 @@ class RecipeController {
         case details = 0
         case ingredients = 1
         case directions = 2
+        static let count = 3
     }
     
     let recipe: Recipe
+    var isEditing = false
+    
+    private var managedObjectContext: NSManagedObjectContext {
+        return recipe.managedObjectContext!
+    }
     
     init(with recipe: Recipe) {
         self.recipe = recipe
     }
     
     var numberOfSections: Int {
+        return isEditing ? numberOfSectionsInEditMode : numberOfSectionsInDisplayMode
+    }
+    
+    private var numberOfSectionsInEditMode: Int {
+        return Section.count
+    }
+    
+    private var numberOfSectionsInDisplayMode: Int {
         var count = 1
         if recipe.ingredients?.count ?? 0 > 0 {
             count += 1
@@ -45,7 +59,24 @@ class RecipeController {
         }
     }
     
-    func numberOfRows(in section: Int) -> Int {
+    func numberOfObjects(in section: Int) -> Int {
+        return isEditing ? numberOfObjectsInEditMode(in: section) : numberOfObjectsInDisplayMode(in: section)
+    }
+    
+    private func numberOfObjectsInEditMode(in section: Int) -> Int {
+        switch Section(rawValue: section) {
+        case .details:
+            return 1
+        case .ingredients:
+            return (recipe.ingredients?.count ?? 0) + 1
+        case .directions:
+            return (recipe.directions?.count ?? 0) + 1
+        default:
+            return 0
+        }
+    }
+    
+    private func numberOfObjectsInDisplayMode(in section: Int) -> Int {
         switch Section(rawValue: section) {
         case .details:
             return 1
@@ -66,6 +97,69 @@ class RecipeController {
     func direction(at index: Int) -> Direction? {
         let directions = recipe.sortedDirections
         return directions.indices.contains(index) ? directions[index] : nil
+    }
+    
+    func canInsertObject(at indexPath: IndexPath) -> Bool {
+        switch Section(rawValue: indexPath.section) {
+        case .details:
+            return false
+        case .ingredients:
+            return ingredient(at: indexPath.row) == nil
+        case .directions:
+            return direction(at: indexPath.row) == nil
+        default:
+            return true
+        }
+    }
+    
+    func canDeleteObject(at indexPath: IndexPath) -> Bool {
+        switch Section(rawValue: indexPath.section) {
+        case .details:
+            return false
+        case .ingredients:
+            return ingredient(at: indexPath.row) != nil
+        case .directions:
+            return direction(at: indexPath.row) != nil
+        default:
+            return true
+        }
+    }
+    
+    func deleteObject(at indexPath: IndexPath) {
+        switch Section(rawValue: indexPath.section) {
+        case .ingredients:
+            deleteIngredient(at: indexPath.row)
+        case .directions:
+            deleteDirection(at: indexPath.row)
+        default:
+            break
+        }
+    }
+    
+    private func deleteIngredient(at index: Int) {
+        if let ingredient = self.ingredient(at: index) {
+            recipe.deleteIngredient(ingredient)
+        }
+    }
+    
+    private func deleteDirection(at index: Int) {
+        if let direction = self.direction(at: index) {
+            recipe.deleteDirection(direction)
+        }
+    }
+    
+    func saveChanges() {
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                // TODO Error handling
+            }
+        }
+    }
+    
+    func discardChanges() {
+        managedObjectContext.rollback()
     }
 
 }

@@ -31,7 +31,6 @@ class RecipesViewController: UITableViewController {
                                                               managedObjectContext: managedObjectContext,
                                                               sectionNameKeyPath: nil,
                                                               cacheName: nil)
-        
         do {
             try fetchedResultsController.performFetch()
         } catch {
@@ -58,6 +57,7 @@ class RecipesViewController: UITableViewController {
         
         let recipe = fetchedResultsController.object(at: indexPath)
         viewController.recipe = recipe
+        viewController.delegate = self
     }
     
     // MARK: Table View Data Source
@@ -79,6 +79,18 @@ class RecipesViewController: UITableViewController {
     // MARK: Actions
     
     @IBAction func addItemPressed(_ sender: Any) {
+    }
+    
+}
+
+// MARK: - Recipe View Controller Delegate
+
+extension RecipesViewController: RecipeViewControllerDelegate {
+    
+    func recipeViewController(_ viewController: RecipeViewController, didEditRecipe recipe: Recipe) {
+        if let indexPath = fetchedResultsController.indexPath(forObject: recipe) {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
     }
     
 }

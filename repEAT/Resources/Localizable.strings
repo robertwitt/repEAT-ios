@@ -9,3 +9,5 @@
 "titleDetails" = "Details";
 "titleIngredients" = "Ingredients";
 "titleDirections" = "Directions";
+
+"placeholderRecipeName" = "Recipe name";
