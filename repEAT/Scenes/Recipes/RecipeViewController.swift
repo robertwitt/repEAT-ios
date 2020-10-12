@@ -60,9 +60,13 @@ class RecipeViewController: UITableViewController {
         tableView.reloadData()
         
         if editing == false {
-            recipeController.saveChanges()
-            delegate?.recipeViewController(self, didEditRecipe: recipe)
+            saveRecipeChanges()
         }
+    }
+    
+    private func saveRecipeChanges() {
+        recipeController.saveChanges()
+        delegate?.recipeViewController(self, didEditRecipe: recipe)
     }
     
     @objc private func cancelItemPressed() {
