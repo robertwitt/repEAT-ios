@@ -59,7 +59,7 @@ class RecipeViewController: UITableViewController {
         recipeController.isEditing = editing
         tableView.reloadData()
         
-        if editing == false {
+        if !editing {
             saveRecipeChanges()
         }
     }
