@@ -58,4 +58,13 @@ extension Recipe {
         addToDirections(step)
     }
     
+    func removeDirection(_ direction: Direction) {
+        removeFromDirections(direction)
+        var order: Int16 = 1
+        sortedDirections.forEach { (remainingDirection) in
+            remainingDirection.orderNumber = order
+            order += 1
+        }
+    }
+    
 }

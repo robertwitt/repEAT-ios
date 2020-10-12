@@ -135,7 +135,7 @@ class RecipeController {
         guard let direction = self.direction(at: index) else {
             return
         }
-        recipe.removeFromDirections(direction)
+        recipe.removeDirection(direction)
         managedObjectContext.delete(direction)
     }
     
