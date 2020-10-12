@@ -19,6 +19,8 @@ class RecipeViewController: UITableViewController {
         }
     }
     
+    var delegate: RecipeViewControllerDelegate?
+    
     private var recipeController: RecipeController!
     
     private var cancelButtonItem: UIBarButtonItem {
@@ -59,6 +61,7 @@ class RecipeViewController: UITableViewController {
         
         if editing == false {
             recipeController.saveChanges()
+            delegate?.recipeViewController(self, didEditRecipe: recipe)
         }
     }
     
@@ -168,5 +171,20 @@ class RecipeViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+}
+
+// MARK: - Recipe View Controller Delegate
+
+protocol RecipeViewControllerDelegate: class {
+    
+    func recipeViewController(_ viewController: RecipeViewController, didEditRecipe recipe: Recipe)
+    
+}
+
+extension RecipeViewController {
+    
+    func recipeViewController(_ viewController: RecipeViewController, didEditRecipe recipe: Recipe) {
+    }
     
 }
