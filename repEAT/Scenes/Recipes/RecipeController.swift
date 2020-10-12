@@ -139,6 +139,16 @@ class RecipeController {
         managedObjectContext.delete(direction)
     }
     
+    func saveChanges() {
+        do {
+            if managedObjectContext.hasChanges {
+                try managedObjectContext.save()
+            }
+        } catch {
+            // TODO Error handling
+        }
+    }
+    
     func discardChanges() {
         managedObjectContext.rollback()
     }

@@ -56,6 +56,10 @@ class RecipeViewController: UITableViewController {
         navigationItem.leftBarButtonItem = editing ? cancelButtonItem : nil
         recipeController.isEditing = editing
         tableView.reloadData()
+        
+        if editing == false {
+            recipeController.saveChanges()
+        }
     }
     
     @objc private func cancelItemPressed() {
