@@ -1,5 +1,5 @@
 //
-//  TextFieldTableViewCell.swift
+//  EditableTableViewCell.swift
 //  repEAT
 //
 //  Created by Witt, Robert on 06.10.20.
@@ -7,16 +7,16 @@
 
 import UIKit
 
-class TextFieldTableViewCell: UITableViewCell {
+class EditableTableViewCell: UITableViewCell {
     
-    static let reuseIdentifier = "TextFieldTableViewCell"
+    static let reuseIdentifier = "EditableTableViewCell"
     
     var textChangedHandler: ((String?) -> Void)?
     
     @IBOutlet weak var textField: UITextField!
     
-    static func register(in tableView: UITableView, reuseIdentifier: String = TextFieldTableViewCell.reuseIdentifier) {
-        let nib = UINib(nibName: "TextFieldTableViewCell", bundle: nil)
+    static func register(in tableView: UITableView, reuseIdentifier: String = EditableTableViewCell.reuseIdentifier) {
+        let nib = UINib(nibName: "EditableTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: reuseIdentifier)
     }
     
@@ -38,7 +38,7 @@ class TextFieldTableViewCell: UITableViewCell {
     
 }
 
-extension TextFieldTableViewCell: UITextFieldDelegate {
+extension EditableTableViewCell: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textChangedHandler?(textField.text)

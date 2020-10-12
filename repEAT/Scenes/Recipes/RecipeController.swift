@@ -86,8 +86,17 @@ class RecipeController {
         return directions.indices.contains(index) ? directions[index] : nil
     }
     
-    func addDirection(_ depiction: String) {
-        recipe.addDirection(depiction)
+    func canInsertObject(at indexPath: IndexPath) -> Bool {
+        switch Section(rawValue: indexPath.section) {
+        case .details:
+            return false
+        case .ingredients:
+            return ingredient(at: indexPath.row) == nil
+        case .directions:
+            return direction(at: indexPath.row) == nil
+        default:
+            return true
+        }
     }
     
     func canDeleteObject(at indexPath: IndexPath) -> Bool {

@@ -11,3 +11,5 @@
 "titleDirections" = "Directions";
 
 "placeholderRecipeName" = "Recipe name";
+"labelAddIngredient" = "New ingredient";
+"labelAddDirection" = "New direction";
