@@ -19,7 +19,7 @@ class RecipeViewController: UITableViewController {
         }
     }
     
-    var delegate: RecipeViewControllerDelegate?
+    weak var delegate: RecipeViewControllerDelegate?
     
     private var recipeController: RecipeController!
     
@@ -148,6 +148,14 @@ class RecipeViewController: UITableViewController {
             recipeController.deleteObject(at: indexPath)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return recipeController.canMoveObject(at: indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
     }
     
     // MARK: Table View Delegate

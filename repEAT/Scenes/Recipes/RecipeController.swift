@@ -148,6 +148,15 @@ class RecipeController {
         }
     }
     
+    func canMoveObject(at indexPath: IndexPath) -> Bool {
+        switch Section(rawValue: indexPath.section) {
+        case .directions:
+            return direction(at: indexPath.row) != nil
+        default:
+            return false
+        }
+    }
+    
     func saveChanges() {
         if managedObjectContext.hasChanges {
             do {
