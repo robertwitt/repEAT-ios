@@ -24,7 +24,7 @@ class DirectionViewController: UITableViewController {
     
     private func setupStepper() {
         stepper.maximumValue = Double(maxSteps)
-        stepper.value = Double(direction.orderNumber)
+        stepper.value = Double(direction.position)
     }
     
     private func updateStepLabel() {

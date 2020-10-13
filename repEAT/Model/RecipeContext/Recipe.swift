@@ -61,14 +61,14 @@ extension Recipe {
     func addDirection(_ depiction: String) {
         let step = Direction(context: managedObjectContext!)
         step.depiction = depiction
-        step.orderNumber = Int16(directions?.count ?? 0) + 1
+        step.position = Int16(directions?.count ?? 0) + 1
         addToDirections(step)
     }
     
     func createDirection(_ depiction: String? = nil) -> Direction {
         let step = Direction(context: managedObjectContext!)
         step.depiction = depiction
-        step.orderNumber = Int16(directions?.count ?? 0) + 1
+        step.position = Int16(directions?.count ?? 0) + 1
         addToDirections(step)
         return step
     }
@@ -80,10 +80,10 @@ extension Recipe {
     }
     
     private func reorderDirections(_ directions: [Direction]) {
-        var order: Int16 = 1
+        var position: Int16 = 1
         directions.forEach { (remainingDirection) in
-            remainingDirection.orderNumber = order
-            order += 1
+            remainingDirection.position = position
+            position += 1
         }
     }
     
