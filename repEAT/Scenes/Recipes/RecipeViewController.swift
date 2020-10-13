@@ -80,10 +80,13 @@ class RecipeViewController: UITableViewController {
         guard let viewController = segue.destination as? DirectionViewController else {
             return
         }
-        guard let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) else {
+        guard let indexPath = sender as? IndexPath else {
             return
         }
-        viewController.direction = recipeController.direction(at: indexPath.row)
+        
+        let direction = recipeController.direction(at: indexPath.row) ?? recipe.createDirection()
+        viewController.direction = direction
+        viewController.maxSteps = recipe.directions?.count ?? 0 + 1
     }
 
     // MARK: Table View Data Source
@@ -156,10 +159,24 @@ class RecipeViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            recipeController.deleteObject(at: indexPath)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+        switch editingStyle {
+        case .insert:
+            insertRow(at: indexPath)
+        case .delete:
+            deleteRow(at: indexPath)
+        default:
+            break
         }
+    }
+    
+    private func insertRow(at indexPath: IndexPath) {
+        // Inserting rows behaves the same as selecting rows
+        tableView(tableView, didSelectRowAt: indexPath)
+    }
+    
+    private func deleteRow(at indexPath: IndexPath) {
+        recipeController.deleteObject(at: indexPath)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -179,7 +196,7 @@ class RecipeViewController: UITableViewController {
             // TODO https://github.com/robertwitt/repEAT-ios/issues/17
             break
         case .directions:
-            performSegue(withIdentifier: "DirectionSegue", sender: tableView.cellForRow(at: indexPath))
+            performSegue(withIdentifier: "DirectionSegue", sender: indexPath)
         default:
             break
         }

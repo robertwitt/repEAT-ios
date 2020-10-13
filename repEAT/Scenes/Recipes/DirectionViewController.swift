@@ -18,12 +18,17 @@ class DirectionViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        setupStepper()
+        updateStepLabel()
+    }
+    
+    private func setupStepper() {
+        stepper.maximumValue = Double(maxSteps)
+        stepper.value = Double(direction.orderNumber)
+    }
+    
+    private func updateStepLabel() {
+        stepLabel.text = String(format: NSLocalizedString("labelDirectionStep", comment: ""), stepper.value)
     }
 
     // MARK: - Table view data source
@@ -94,6 +99,7 @@ class DirectionViewController: UITableViewController {
     */
     
     @IBAction func stepperValueChanged(_ sender: Any) {
+        updateStepLabel()
     }
     
 }

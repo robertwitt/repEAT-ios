@@ -38,6 +38,7 @@ extension Recipe {
         return ingredients?.sortedArray(using: [sortDescriptor]) as? [Ingredient] ?? []
     }
     
+    // TODO This method is a helper currently and might be omitted
     func addIngredient(_ food: Food, quantity: Float = 0.0, unit: String? = nil) {
         let ingredient = Ingredient(context: managedObjectContext!)
         ingredient.food = food
@@ -56,11 +57,20 @@ extension Recipe {
         return directions?.sortedArray(using: [sortDescriptor]) as? [Direction] ?? []
     }
     
+    // TODO This method is a helper currently and might be omitted
     func addDirection(_ depiction: String) {
         let step = Direction(context: managedObjectContext!)
         step.depiction = depiction
         step.orderNumber = Int16(directions?.count ?? 0) + 1
         addToDirections(step)
+    }
+    
+    func createDirection(_ depiction: String? = nil) -> Direction {
+        let step = Direction(context: managedObjectContext!)
+        step.depiction = depiction
+        step.orderNumber = Int16(directions?.count ?? 0) + 1
+        addToDirections(step)
+        return step
     }
     
     func deleteDirection(_ direction: Direction) {
