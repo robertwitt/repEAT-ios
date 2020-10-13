@@ -22,6 +22,7 @@
 		96896EEC252B181A00D4816B /* Ingredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96896EEB252B181A00D4816B /* Ingredient.swift */; };
 		96896F0C252C861800D4816B /* EditableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96896F0A252C861800D4816B /* EditableTableViewCell.swift */; };
 		96896F0D252C861800D4816B /* EditableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96896F0B252C861800D4816B /* EditableTableViewCell.xib */; };
+		969BD5B925354D7A00CC7DF2 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969BD5B825354D7A00CC7DF2 /* DirectionViewController.swift */; };
 		96D35CD52529CDB800D1CBD8 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D35CD42529CDB800D1CBD8 /* Recipe.swift */; };
 		96D35CDA2529D11600D1CBD8 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D35CD92529D11600D1CBD8 /* Food.swift */; };
 /* End PBXBuildFile section */
@@ -73,6 +74,7 @@
 		96896EEB252B181A00D4816B /* Ingredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredient.swift; sourceTree = "<group>"; };
 		96896F0A252C861800D4816B /* EditableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableTableViewCell.swift; sourceTree = "<group>"; };
 		96896F0B252C861800D4816B /* EditableTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditableTableViewCell.xib; sourceTree = "<group>"; };
+		969BD5B825354D7A00CC7DF2 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		96D35CD42529CDB800D1CBD8 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		96D35CD92529D11600D1CBD8 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -220,6 +222,7 @@
 				961E055F25288B1A00C15C4C /* RecipesViewController.swift */,
 				96896ED22529E14600D4816B /* RecipeViewController.swift */,
 				96896ED72529E78200D4816B /* RecipeController.swift */,
+				969BD5B825354D7A00CC7DF2 /* DirectionViewController.swift */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				961E056625288B1A00C15C4C /* repEAT.xcdatamodeld in Sources */,
 				96896ED82529E78200D4816B /* RecipeController.swift in Sources */,
 				96896EEC252B181A00D4816B /* Ingredient.swift in Sources */,
+				969BD5B925354D7A00CC7DF2 /* DirectionViewController.swift in Sources */,
 				96896F0C252C861800D4816B /* EditableTableViewCell.swift in Sources */,
 				961E056025288B1A00C15C4C /* RecipesViewController.swift in Sources */,
 				96896ED32529E14600D4816B /* RecipeViewController.swift in Sources */,

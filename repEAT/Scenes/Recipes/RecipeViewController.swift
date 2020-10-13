@@ -67,6 +67,25 @@ class RecipeViewController: UITableViewController {
         setEditing(false, animated: true)
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "DirectionSegue":
+            prepareDirectionViewController(for: segue, sender: sender)
+        default:
+            break
+        }
+    }
+    
+    private func prepareDirectionViewController(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let viewController = segue.destination as? DirectionViewController else {
+            return
+        }
+        guard let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) else {
+            return
+        }
+        viewController.direction = recipeController.direction(at: indexPath.row)
+    }
+
     // MARK: Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -154,6 +173,18 @@ class RecipeViewController: UITableViewController {
     
     // MARK: Table View Delegate
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch RecipeController.Section(rawValue: indexPath.section) {
+        case .ingredients:
+            // TODO https://github.com/robertwitt/repEAT-ios/issues/17
+            break
+        case .directions:
+            performSegue(withIdentifier: "DirectionSegue", sender: tableView.cellForRow(at: indexPath))
+        default:
+            break
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         if recipeController.canDeleteObject(at: indexPath) {
             return .delete
@@ -167,15 +198,5 @@ class RecipeViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section != RecipeController.Section.details.rawValue
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
 }
