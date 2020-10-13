@@ -19,8 +19,6 @@ class RecipeViewController: UITableViewController {
         }
     }
     
-    weak var delegate: RecipeViewControllerDelegate?
-    
     private var recipeController: RecipeController!
     
     private var cancelButtonItem: UIBarButtonItem {
@@ -60,13 +58,8 @@ class RecipeViewController: UITableViewController {
         tableView.reloadData()
         
         if !editing {
-            saveRecipeChanges()
+            recipeController.saveChanges()
         }
-    }
-    
-    private func saveRecipeChanges() {
-        recipeController.saveChanges()
-        delegate?.recipeViewController(self, didEditRecipe: recipe)
     }
     
     @objc private func cancelItemPressed() {
@@ -184,20 +177,5 @@ class RecipeViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-}
-
-// MARK: - Recipe View Controller Delegate
-
-protocol RecipeViewControllerDelegate: class {
-    
-    func recipeViewController(_ viewController: RecipeViewController, didEditRecipe recipe: Recipe)
-    
-}
-
-extension RecipeViewController {
-    
-    func recipeViewController(_ viewController: RecipeViewController, didEditRecipe recipe: Recipe) {
-    }
     
 }
