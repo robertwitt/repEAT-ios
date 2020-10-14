@@ -87,6 +87,7 @@ class RecipeViewController: UITableViewController {
         let direction = recipeController.direction(at: indexPath.row) ?? recipe.createDirection()
         viewController.direction = direction
         viewController.maxSteps = recipe.directions?.count ?? 0 + 1
+        viewController.delegate = self
     }
 
     // MARK: Table View Data Source
@@ -214,6 +215,16 @@ class RecipeViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section != RecipeController.Section.details.rawValue
+    }
+    
+}
+
+// MARK: - Direction View Controller Delegate
+
+extension RecipeViewController: DirectionViewControllerDelegate {
+    
+    func directionViewController(_ viewController: DirectionViewController, didEndEditing direction: Direction) {
+        tableView.reloadData()
     }
     
 }

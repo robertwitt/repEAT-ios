@@ -9,6 +9,7 @@ import UIKit
 
 class DirectionViewController: UITableViewController {
     
+    weak var delegate: DirectionViewControllerDelegate?
     var direction: Direction!
     var maxSteps = 1
     
@@ -38,11 +39,28 @@ class DirectionViewController: UITableViewController {
         textView.becomeFirstResponder()
     }
     
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        if parent == nil {
+            updateDirection()
+        }
+    }
+    
+    private func updateDirection() {
+        direction.setPosition(Direction.Position(stepper.value))
+        direction.depiction = textView.text
+        delegate?.directionViewController(self, didEndEditing: direction)
+    }
+    
+    // MARK: Actions
+    
     @IBAction func stepperValueChanged(_ sender: Any) {
         updateStepLabel()
     }
     
 }
+
+// MARK: - Text View Delegate
 
 extension DirectionViewController: UITextViewDelegate {
     
@@ -54,5 +72,19 @@ extension DirectionViewController: UITextViewDelegate {
         tableView.beginUpdates()
         tableView.endUpdates()
     }
+    
+}
+
+// MARK: - Direction View Controller Delegate
+
+protocol DirectionViewControllerDelegate: class {
+    
+    func directionViewController(_ viewController: DirectionViewController, didEndEditing direction: Direction)
+    
+}
+
+extension DirectionViewControllerDelegate {
+    
+    func directionViewController(_ viewController: DirectionViewController, didEndEditing direction: Direction) {}
     
 }

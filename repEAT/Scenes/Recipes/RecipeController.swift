@@ -28,22 +28,7 @@ class RecipeController {
     }
     
     var numberOfSections: Int {
-        return isEditing ? numberOfSectionsInEditMode : numberOfSectionsInDisplayMode
-    }
-    
-    private var numberOfSectionsInEditMode: Int {
         return Section.count
-    }
-    
-    private var numberOfSectionsInDisplayMode: Int {
-        var count = 1
-        if recipe.ingredients?.count ?? 0 > 0 {
-            count += 1
-        }
-        if recipe.directions?.count ?? 00 > 0 {
-            count += 1
-        }
-        return count
     }
     
     func headerTitle(of section: Int) -> String? {
