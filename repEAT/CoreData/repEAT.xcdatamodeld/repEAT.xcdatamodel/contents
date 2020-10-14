@@ -7,6 +7,7 @@
     </entity>
     <entity name="Food" representedClassName="Food" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="baseUnit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UnitOfMeasure" inverseName="assignedToFoods" inverseEntity="UnitOfMeasure"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="food" inverseEntity="Ingredient"/>
     </entity>
     <entity name="Ingredient" representedClassName="Ingredient" syncable="YES" codeGenerationType="class">
@@ -21,10 +22,16 @@
         <relationship name="directions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Direction" inverseName="recipe" inverseEntity="Direction"/>
         <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ingredient" inverseName="recipe" inverseEntity="Ingredient"/>
     </entity>
+    <entity name="UnitOfMeasure" representedClassName="UnitOfMeasure" syncable="YES" codeGenerationType="class">
+        <attribute name="code" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="assignedToFoods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Food" inverseName="baseUnit" inverseEntity="Food"/>
+    </entity>
     <elements>
         <element name="Direction" positionX="-309.03125" positionY="159.06640625" width="128" height="88"/>
-        <element name="Food" positionX="156.171875" positionY="1.76953125" width="128" height="73"/>
+        <element name="Food" positionX="156.171875" positionY="1.76953125" width="128" height="88"/>
         <element name="Ingredient" positionX="-261.2421875" positionY="1.37109375" width="128" height="103"/>
         <element name="Recipe" positionX="-472.109375" positionY="4.94140625" width="128" height="103"/>
+        <element name="UnitOfMeasure" positionX="-270" positionY="108" width="128" height="88"/>
     </elements>
 </model>

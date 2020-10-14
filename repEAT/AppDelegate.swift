@@ -69,6 +69,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
+        let plist = UnitOfMeasurePlist()
+        let uoms = plist.units.map { (unit) -> UnitOfMeasure in
+            let uom = UnitOfMeasure(context: context)
+            uom.code = unit.code
+            uom.name = unit.name
+            return uom
+        }
+        
         let recipe = Recipe(context: context)
         recipe.name = "Spaghetti Carbonara"
         recipe.image = UIImage(named: "spaghetti-carbonara")
