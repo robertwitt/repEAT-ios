@@ -142,6 +142,17 @@ class RecipeController {
         }
     }
     
+    func targetIndexPathForMoveFromObject(at sourceIndexPath: IndexPath, to proposedIndexPath: IndexPath) -> IndexPath {
+        // Only directions can be moved. No check on the section here.
+        // Move only within a section possible.
+        let lastRow = (recipe.directions?.count ?? 1) - 1
+        if sourceIndexPath.section == proposedIndexPath.section && proposedIndexPath.row <= lastRow {
+            return proposedIndexPath
+        }
+        let targetRow = sourceIndexPath.section > proposedIndexPath.section ? 0 : lastRow
+        return IndexPath(row: targetRow, section: sourceIndexPath.section)
+    }
+    
     func moveObject(at sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // Only directions can be moved. No check on the section here.
         let direction = self.direction(at: sourceIndexPath.row)

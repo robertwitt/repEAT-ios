@@ -184,6 +184,10 @@ class RecipeViewController: UITableViewController {
         return recipeController.canMoveObject(at: indexPath)
     }
     
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        return recipeController.targetIndexPathForMoveFromObject(at: sourceIndexPath, to: proposedDestinationIndexPath)
+    }
+    
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         recipeController.moveObject(at: sourceIndexPath, to: destinationIndexPath)
         tableView.moveRow(at: sourceIndexPath, to: destinationIndexPath)
