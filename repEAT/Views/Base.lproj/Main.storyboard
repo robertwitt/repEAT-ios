@@ -237,7 +237,13 @@
                             <outlet property="delegate" destination="T56-VN-Jrj" id="oic-Qq-4lE"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Direction" id="MqP-wk-OPc"/>
+                    <navigationItem key="navigationItem" title="Direction" id="MqP-wk-OPc">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="AoM-jK-glv">
+                            <connections>
+                                <action selector="addItemPressed:" destination="T56-VN-Jrj" id="6Ba-pa-jRD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="stepLabel" destination="3rC-cu-gKA" id="Cjk-xi-xJN"/>
                         <outlet property="stepper" destination="xWp-kz-qkN" id="aJm-9m-Oq0"/>

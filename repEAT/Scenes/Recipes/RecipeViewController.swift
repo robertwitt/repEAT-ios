@@ -231,4 +231,8 @@ extension RecipeViewController: DirectionViewControllerDelegate {
         tableView.reloadData()
     }
     
+    func directionViewController(_ viewController: DirectionViewController, directionToAddAfter direction: Direction) -> Direction {
+        return recipe.createDirection()
+    }
+    
 }

@@ -19,6 +19,10 @@ class DirectionViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+    }
+    
+    private func setupView() {
         setupStepper()
         updateStepLabel()
         setupTextView()
@@ -58,6 +62,18 @@ class DirectionViewController: UITableViewController {
         updateStepLabel()
     }
     
+    @IBAction func addItemPressed(_ sender: Any) {
+        guard let delegate = delegate else {
+            return
+        }
+        
+        updateDirection()
+        let newDirection = delegate.directionViewController(self, directionToAddAfter: direction)
+        direction = newDirection
+        maxSteps += 1
+        setupView()
+    }
+    
 }
 
 // MARK: - Text View Delegate
@@ -80,6 +96,8 @@ extension DirectionViewController: UITextViewDelegate {
 protocol DirectionViewControllerDelegate: class {
     
     func directionViewController(_ viewController: DirectionViewController, didEndEditing direction: Direction)
+    
+    func directionViewController(_ viewController: DirectionViewController, directionToAddAfter direction: Direction) -> Direction
     
 }
 
