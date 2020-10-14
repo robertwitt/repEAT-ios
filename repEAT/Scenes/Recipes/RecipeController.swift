@@ -28,22 +28,7 @@ class RecipeController {
     }
     
     var numberOfSections: Int {
-        return isEditing ? numberOfSectionsInEditMode : numberOfSectionsInDisplayMode
-    }
-    
-    private var numberOfSectionsInEditMode: Int {
         return Section.count
-    }
-    
-    private var numberOfSectionsInDisplayMode: Int {
-        var count = 1
-        if recipe.ingredients?.count ?? 0 > 0 {
-            count += 1
-        }
-        if recipe.directions?.count ?? 00 > 0 {
-            count += 1
-        }
-        return count
     }
     
     func headerTitle(of section: Int) -> String? {
@@ -157,9 +142,22 @@ class RecipeController {
         }
     }
     
+    func targetIndexPathForMoveFromObject(at sourceIndexPath: IndexPath, to proposedIndexPath: IndexPath) -> IndexPath {
+        // Only directions can be moved. No check on the section here.
+        // Move only within a section possible.
+        let lastRow = (recipe.directions?.count ?? 1) - 1
+        if sourceIndexPath.section == proposedIndexPath.section && proposedIndexPath.row <= lastRow {
+            return proposedIndexPath
+        }
+        let targetRow = sourceIndexPath.section > proposedIndexPath.section ? 0 : lastRow
+        return IndexPath(row: targetRow, section: sourceIndexPath.section)
+    }
+    
     func moveObject(at sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // Only directions can be moved. No check on the section here.
-        recipe.moveDirection(at: sourceIndexPath.row, to: destinationIndexPath.row)
+        let direction = self.direction(at: sourceIndexPath.row)
+        let newPosition = Direction.Position(destinationIndexPath.row + 1)
+        direction?.setPosition(newPosition)
     }
     
     func saveChanges() {

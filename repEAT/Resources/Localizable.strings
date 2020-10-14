@@ -11,3 +11,4 @@
 "titleDirections" = "Directions";
 
 "placeholderRecipeName" = "Recipe name";
+"labelDirectionStep" = "Step %.0f";

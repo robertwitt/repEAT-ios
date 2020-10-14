@@ -67,6 +67,29 @@ class RecipeViewController: UITableViewController {
         setEditing(false, animated: true)
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "DirectionSegue":
+            prepareDirectionViewController(for: segue, sender: sender)
+        default:
+            break
+        }
+    }
+    
+    private func prepareDirectionViewController(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let viewController = segue.destination as? DirectionViewController else {
+            return
+        }
+        guard let indexPath = sender as? IndexPath else {
+            return
+        }
+        
+        let direction = recipeController.direction(at: indexPath.row) ?? recipe.createDirection()
+        viewController.direction = direction
+        viewController.maxSteps = recipe.directions?.count ?? 0 + 1
+        viewController.delegate = self
+    }
+
     // MARK: Table View Data Source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -137,14 +160,32 @@ class RecipeViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            recipeController.deleteObject(at: indexPath)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+        switch editingStyle {
+        case .insert:
+            insertRow(at: indexPath)
+        case .delete:
+            deleteRow(at: indexPath)
+        default:
+            break
         }
+    }
+    
+    private func insertRow(at indexPath: IndexPath) {
+        // Inserting rows behaves the same as selecting rows
+        tableView(tableView, didSelectRowAt: indexPath)
+    }
+    
+    private func deleteRow(at indexPath: IndexPath) {
+        recipeController.deleteObject(at: indexPath)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return recipeController.canMoveObject(at: indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        return recipeController.targetIndexPathForMoveFromObject(at: sourceIndexPath, to: proposedDestinationIndexPath)
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -153,6 +194,18 @@ class RecipeViewController: UITableViewController {
     }
     
     // MARK: Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch RecipeController.Section(rawValue: indexPath.section) {
+        case .ingredients:
+            // TODO https://github.com/robertwitt/repEAT-ios/issues/17
+            break
+        case .directions:
+            performSegue(withIdentifier: "DirectionSegue", sender: indexPath)
+        default:
+            break
+        }
+    }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         if recipeController.canDeleteObject(at: indexPath) {
@@ -167,15 +220,19 @@ class RecipeViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section != RecipeController.Section.details.rawValue
     }
+    
+}
 
-    /*
-    // MARK: - Navigation
+// MARK: - Direction View Controller Delegate
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension RecipeViewController: DirectionViewControllerDelegate {
+    
+    func directionViewController(_ viewController: DirectionViewController, didEndEditing direction: Direction) {
+        tableView.reloadData()
     }
-    */
+    
+    func directionViewController(_ viewController: DirectionViewController, directionToAddAfter direction: Direction) -> Direction {
+        return recipe.createDirection()
+    }
     
 }
