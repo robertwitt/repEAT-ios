@@ -53,24 +53,21 @@ extension Recipe {
     }
     
     var sortedDirections: [Direction] {
-        let sortDescriptor = NSSortDescriptor(key: "orderNumber", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "position", ascending: true)
         return directions?.sortedArray(using: [sortDescriptor]) as? [Direction] ?? []
     }
     
     // TODO This method is a helper currently and might be omitted
     func addDirection(_ depiction: String) {
-        let step = Direction(context: managedObjectContext!)
-        step.depiction = depiction
-        step.position = Int16(directions?.count ?? 0) + 1
-        addToDirections(step)
+        _ = createDirection(depiction)
     }
     
     func createDirection(_ depiction: String? = nil) -> Direction {
-        let step = Direction(context: managedObjectContext!)
-        step.depiction = depiction
-        step.position = Int16(directions?.count ?? 0) + 1
-        addToDirections(step)
-        return step
+        let direction = Direction(context: managedObjectContext!)
+        direction.depiction = depiction
+        direction.position = Direction.Position(directions?.count ?? 0) + 1
+        addToDirections(direction)
+        return direction
     }
     
     func deleteDirection(_ direction: Direction) {
@@ -79,22 +76,23 @@ extension Recipe {
         reorderDirections(sortedDirections)
     }
     
+    func moveDirection(_ direction: Direction, to newPosition: Direction.Position) {
+        var directions = sortedDirections
+        directions.removeAll { (object) -> Bool in
+            return object == direction
+        }
+        directions.insert(direction, at: Int(newPosition) - 1)
+        reorderDirections(directions)
+
+        direction.position = newPosition
+    }
+    
     private func reorderDirections(_ directions: [Direction]) {
-        var position: Int16 = 1
+        var position: Direction.Position = 1
         directions.forEach { (remainingDirection) in
             remainingDirection.position = position
             position += 1
         }
-    }
-    
-    func moveDirection(at sourceIndex: Int, to targetIndex: Int) {
-        var directions = sortedDirections
-        let direction = directions[sourceIndex]
-        directions.removeAll { (object) -> Bool in
-            return object == direction
-        }
-        directions.insert(direction, at: targetIndex)
-        reorderDirections(directions)
     }
     
 }

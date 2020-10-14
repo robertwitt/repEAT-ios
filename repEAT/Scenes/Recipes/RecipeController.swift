@@ -159,7 +159,9 @@ class RecipeController {
     
     func moveObject(at sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // Only directions can be moved. No check on the section here.
-        recipe.moveDirection(at: sourceIndexPath.row, to: destinationIndexPath.row)
+        let direction = self.direction(at: sourceIndexPath.row)
+        let newPosition = Direction.Position(destinationIndexPath.row + 1)
+        direction?.setPosition(newPosition)
     }
     
     func saveChanges() {
