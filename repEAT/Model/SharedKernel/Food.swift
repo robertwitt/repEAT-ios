@@ -9,9 +9,10 @@ import CoreData
 
 extension Food {
     
-    convenience init(_ name: String, into context: NSManagedObjectContext) {
+    convenience init(_ name: String, baseUnit: UnitOfMeasure? = nil, into context: NSManagedObjectContext) {
         self.init(context: context)
         self.name = name
+        self.baseUnit = baseUnit
     }
     
 }

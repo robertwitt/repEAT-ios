@@ -38,15 +38,6 @@ extension Recipe {
         return ingredients?.sortedArray(using: [sortDescriptor]) as? [Ingredient] ?? []
     }
     
-    // TODO This method is a helper currently and might be omitted
-    func addIngredient(_ food: Food, quantity: Float = 0.0, unit: String? = nil) {
-        let ingredient = Ingredient(context: managedObjectContext!)
-        ingredient.food = food
-        ingredient.quantity = quantity
-        ingredient.unit = unit
-        addToIngredients(ingredient)
-    }
-    
     func deleteIngredient(_ ingredient: Ingredient) {
         removeFromIngredients(ingredient)
         managedObjectContext?.delete(ingredient)
@@ -55,11 +46,6 @@ extension Recipe {
     var sortedDirections: [Direction] {
         let sortDescriptor = NSSortDescriptor(key: "position", ascending: true)
         return directions?.sortedArray(using: [sortDescriptor]) as? [Direction] ?? []
-    }
-    
-    // TODO This method is a helper currently and might be omitted
-    func addDirection(_ depiction: String) {
-        _ = createDirection(depiction)
     }
     
     func createDirection(_ depiction: String? = nil) -> Direction {
