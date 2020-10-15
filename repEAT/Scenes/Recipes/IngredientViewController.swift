@@ -45,15 +45,19 @@ class IngredientViewController: UITableViewController {
         quantityTextField.text = ingredient.formattedQuantity
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        switch segue.identifier {
+        case "FoodsSegue":
+            prepareFoodsViewController(for: segue, sender: sender)
+        default:
+            break
+        }
     }
-    */
+    
+    private func prepareFoodsViewController(for segue: UIStoryboardSegue, sender: Any?) {
+        let viewController = segue.destination as? FoodsViewController
+        viewController?.delegate = self
+    }
     
     // MARK: Table View Delegate
     
@@ -66,6 +70,12 @@ class IngredientViewController: UITableViewController {
         }
     }
 
+}
+
+// MARK: - Foods View Controller Delegate
+
+extension IngredientViewController: FoodsViewControllerDelegate {
+    
 }
 
 // MARK: - Ingredient View Controller Delegate

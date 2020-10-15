@@ -189,6 +189,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="37g-Yb-4o6" kind="show" identifier="FoodsSegue" id="Yw0-Xb-zda"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="jvP-e4-N7l">
                                         <rect key="frame" x="0.0" y="61.5" width="414" height="43.5"/>
@@ -246,6 +249,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aMW-PU-FfH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2776.811594202899" y="-282.58928571428572"/>
+        </scene>
+        <!--Foods-->
+        <scene sceneID="Zsz-CT-JC8">
+            <objects>
+                <tableViewController id="37g-Yb-4o6" customClass="FoodsViewController" customModule="repEAT" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="AVf-Nd-LfA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="xFY-tW-W7g">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xFY-tW-W7g" id="mFJ-pS-uGR">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="37g-Yb-4o6" id="jg6-tx-s95"/>
+                            <outlet property="delegate" destination="37g-Yb-4o6" id="gfz-Av-who"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Foods" id="BRM-ci-ul1">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="u9S-Ek-5tw"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="liV-tE-Z1u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3700" y="-283"/>
         </scene>
         <!--Direction-->
         <scene sceneID="tVY-Mu-d5q">
