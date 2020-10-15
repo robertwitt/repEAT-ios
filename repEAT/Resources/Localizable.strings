@@ -12,3 +12,5 @@
 
 "placeholderRecipeName" = "Recipe name";
 "labelDirectionStep" = "Step %.0f";
+"labelIngredientQuantity" = "Quantity";
+"labelIngredientQuantityWithUnit" = "Quantity (in %@)";
