@@ -245,6 +245,11 @@ class RecipeViewController: UITableViewController {
 
 extension RecipeViewController: IngredientViewControllerDelegate {
     
+    func ingredientViewController(_ viewController: IngredientViewController, didEndEditing ingredient: Ingredient) {
+        let indexSet = IndexSet(integer: RecipeController.Section.ingredients.rawValue)
+        tableView.reloadSections(indexSet, with: .none)
+    }
+    
 }
 
 // MARK: - Direction View Controller Delegate
@@ -252,7 +257,8 @@ extension RecipeViewController: IngredientViewControllerDelegate {
 extension RecipeViewController: DirectionViewControllerDelegate {
     
     func directionViewController(_ viewController: DirectionViewController, didEndEditing direction: Direction) {
-        tableView.reloadData()
+        let indexSet = IndexSet(integer: RecipeController.Section.directions.rawValue)
+        tableView.reloadSections(indexSet, with: .none)
     }
     
     func directionViewController(_ viewController: DirectionViewController, directionToAddAfter direction: Direction) -> Direction {

@@ -47,6 +47,18 @@ class IngredientViewController: UITableViewController {
         quantityLabel.textColor = quantityCellEnabled ? .black : .gray
         quantityTextField.isEnabled = quantityCellEnabled
     }
+    
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        if parent == nil {
+            updateIngredient()
+        }
+    }
+    
+    private func updateIngredient() {
+        ingredient.quantity = Float(quantityTextField.text ?? "0") ?? 0.0
+        delegate?.ingredientViewController(self, didEndEditing: ingredient)
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
@@ -90,5 +102,13 @@ extension IngredientViewController: FoodsViewControllerDelegate {
 // MARK: - Ingredient View Controller Delegate
 
 protocol IngredientViewControllerDelegate: class {
+    
+    func ingredientViewController(_ viewController: IngredientViewController, didEndEditing ingredient: Ingredient)
+    
+}
+
+extension IngredientViewControllerDelegate {
+    
+    func ingredientViewController(_ viewController: IngredientViewController, didEndEditing ingredient: Ingredient) {}
     
 }
