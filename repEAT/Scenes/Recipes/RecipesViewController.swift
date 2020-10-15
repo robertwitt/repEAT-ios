@@ -53,12 +53,14 @@ class RecipesViewController: UITableViewController {
         guard let viewController = segue.destination as? RecipeViewController else {
             return
         }
-        guard let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) else {
-            return
-        }
         
-        let recipe = fetchedResultsController.object(at: indexPath)
-        viewController.recipe = recipe
+        if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
+            viewController.recipe = fetchedResultsController.object(at: indexPath)
+        } else {
+            viewController.recipe = Recipe(context: managedObjectContext)
+            viewController.isCreatingRecipe = true
+            viewController.setEditing(true, animated: false)
+        }
     }
     
     // MARK: Table View Data Source
@@ -80,6 +82,7 @@ class RecipesViewController: UITableViewController {
     // MARK: Actions
     
     @IBAction func addItemPressed(_ sender: Any) {
+        performSegue(withIdentifier: "RecipeSegue", sender: nil)
     }
     
 }
@@ -89,13 +92,11 @@ class RecipesViewController: UITableViewController {
 extension RecipesViewController: NSFetchedResultsControllerDelegate {
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        guard let indexPath = indexPath else {
-            return
-        }
-        
         switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .automatic)
         case .update:
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+            tableView.reloadRows(at: [indexPath!], with: .automatic)
         default:
             break
         }

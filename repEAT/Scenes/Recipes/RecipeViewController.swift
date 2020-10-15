@@ -19,6 +19,8 @@ class RecipeViewController: UITableViewController {
         }
     }
     
+    var isCreatingRecipe = false
+    
     private var recipeController: RecipeController!
     
     private var cancelButtonItem: UIBarButtonItem {
@@ -58,13 +60,23 @@ class RecipeViewController: UITableViewController {
         tableView.reloadData()
         
         if !editing {
-            recipeController.saveChanges()
+            saveRecipe()
         }
+    }
+    
+    private func saveRecipe() {
+        recipeController.saveChanges()
+        isCreatingRecipe = false
     }
     
     @objc private func cancelItemPressed() {
         recipeController.discardChanges()
-        setEditing(false, animated: true)
+        
+        if isCreatingRecipe {
+            navigationController?.popViewController(animated: true)
+        } else {
+            setEditing(false, animated: true)
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
