@@ -211,6 +211,10 @@ class RecipeViewController: UITableViewController {
     // MARK: Table View Delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard isEditing else {
+            return
+        }
+        
         switch RecipeController.Section(rawValue: indexPath.section) {
         case .ingredients:
             performSegue(withIdentifier: "IngredientSegue", sender: indexPath)

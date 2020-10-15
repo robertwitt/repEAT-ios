@@ -23,26 +23,29 @@ class IngredientViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        updateView()
     }
     
-    private func setupView() {
-        updateLabels()
-        setupTextField()
+    private func updateView() {
+        updateFoodCell()
+        updateQuantityCell()
     }
     
-    private func updateLabels() {
+    private func updateFoodCell() {
         foodLabel.text = ingredient.food?.name
-        
+    }
+    
+    private func updateQuantityCell() {
         if let quantityUnitCode = ingredient.quantityUnit?.code {
             quantityLabel.text = String(format: NSLocalizedString("labelIngredientQuantityWithUnit", comment: ""), quantityUnitCode)
         } else {
             quantityLabel.text = NSLocalizedString("labelIngredientQuantity", comment: "")
         }
-    }
-    
-    private func setupTextField() {
         quantityTextField.text = ingredient.formattedQuantity
+        
+        let quantityCellEnabled = ingredient.quantityUnit != nil
+        quantityLabel.textColor = quantityCellEnabled ? .black : .gray
+        quantityTextField.isEnabled = quantityCellEnabled
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -75,6 +78,12 @@ class IngredientViewController: UITableViewController {
 // MARK: - Foods View Controller Delegate
 
 extension IngredientViewController: FoodsViewControllerDelegate {
+    
+    func foodsViewController(_ viewController: FoodsViewController, didSelectFood food: Food) {
+        ingredient.food = food
+        ingredient.quantity = 0.0
+        updateView()
+    }
     
 }
 
