@@ -42,6 +42,7 @@ extension Recipe {
         let ingredient = Ingredient(context: managedObjectContext!)
         ingredient.food = food
         ingredient.quantity = quantity
+        addToIngredients(ingredient)
         return ingredient
     }
     

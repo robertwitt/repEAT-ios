@@ -250,6 +250,10 @@ extension RecipeViewController: IngredientViewControllerDelegate {
         tableView.reloadSections(indexSet, with: .none)
     }
     
+    func ingredientViewControllerNewIngredient(_ viewController: IngredientViewController) -> Ingredient {
+        return recipe.createIngredient()
+    }
+    
 }
 
 // MARK: - Direction View Controller Delegate

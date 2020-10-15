@@ -238,7 +238,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Ingredient" id="L8T-3b-kNz">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="M6K-ny-Eer"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="M6K-ny-Eer">
+                            <connections>
+                                <action selector="addItemPressed:" destination="yzL-4P-0wN" id="f4p-zA-6j7"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="foodLabel" destination="vqQ-vf-UNP" id="uIQ-ml-RAt"/>

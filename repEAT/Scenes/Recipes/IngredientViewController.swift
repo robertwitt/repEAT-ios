@@ -84,6 +84,18 @@ class IngredientViewController: UITableViewController {
             break
         }
     }
+    
+    // MARK: Actions
+    
+    @IBAction func addItemPressed(_ sender: Any) {
+        guard let delegate = delegate else {
+            return
+        }
+        
+        updateIngredient()
+        ingredient = delegate.ingredientViewControllerNewIngredient(self)
+        updateView()
+    }
 
 }
 
@@ -95,6 +107,7 @@ extension IngredientViewController: FoodsViewControllerDelegate {
         ingredient.food = food
         ingredient.quantity = 0.0
         updateView()
+        navigationController?.popViewController(animated: true)
     }
     
 }
@@ -104,6 +117,8 @@ extension IngredientViewController: FoodsViewControllerDelegate {
 protocol IngredientViewControllerDelegate: class {
     
     func ingredientViewController(_ viewController: IngredientViewController, didEndEditing ingredient: Ingredient)
+    
+    func ingredientViewControllerNewIngredient(_ viewController: IngredientViewController) -> Ingredient
     
 }
 
