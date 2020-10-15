@@ -9,6 +9,8 @@ import Foundation
 
 extension Ingredient {
     
+    typealias Quantity = Float
+    
     var quantityUnit: UnitOfMeasure? {
         return food?.baseUnit
     }

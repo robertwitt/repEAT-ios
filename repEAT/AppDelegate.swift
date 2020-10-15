@@ -115,7 +115,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // swiftlint:enable line_length
     }
     
-    private func addIngredient(_ food: Food, quantity: Float = 0.0, to recipe: Recipe) {
+    private func addIngredient(_ food: Food, quantity: Ingredient.Quantity = 0.0, to recipe: Recipe) {
         let ingredient = Ingredient(context: recipe.managedObjectContext!)
         ingredient.food = food
         ingredient.quantity = quantity

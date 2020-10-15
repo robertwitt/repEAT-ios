@@ -201,7 +201,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quantity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3O-gc-7rW">
-                                                    <rect key="frame" x="16" y="0.0" width="281" height="44"/>
+                                                    <rect key="frame" x="20" y="0.0" width="277" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="g5K-jH-A02"/>
                                                     </constraints>
@@ -215,7 +215,7 @@
                                                         <constraint firstAttribute="width" constant="97" id="hVq-BD-CPv"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -224,7 +224,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="Q3O-gc-7rW" secondAttribute="bottom" id="KKL-Gj-Lbj"/>
                                                 <constraint firstItem="cIb-Tn-si7" firstAttribute="top" secondItem="FIV-bM-ZLq" secondAttribute="top" id="QDM-4V-Ekq"/>
                                                 <constraint firstItem="Q3O-gc-7rW" firstAttribute="top" secondItem="FIV-bM-ZLq" secondAttribute="top" id="k52-Qs-DTU"/>
-                                                <constraint firstItem="Q3O-gc-7rW" firstAttribute="leading" secondItem="FIV-bM-ZLq" secondAttribute="leading" constant="16" id="pff-Im-bIb"/>
+                                                <constraint firstItem="Q3O-gc-7rW" firstAttribute="leading" secondItem="FIV-bM-ZLq" secondAttribute="leading" constant="20" id="pff-Im-bIb"/>
                                                 <constraint firstAttribute="trailing" secondItem="cIb-Tn-si7" secondAttribute="trailing" constant="20" symbolic="YES" id="zKF-hO-hEH"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -352,7 +352,6 @@
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0bA-qj-zpJ">
                                                     <rect key="frame" x="16" y="0.0" width="382" height="44"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="43" id="dZN-Tu-3e0"/>
                                                     </constraints>
