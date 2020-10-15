@@ -130,6 +130,7 @@
                     <navigationItem key="navigationItem" title="Recipe" id="1ku-cv-wZg"/>
                     <connections>
                         <segue destination="T56-VN-Jrj" kind="show" identifier="DirectionSegue" id="fN5-0y-02s"/>
+                        <segue destination="yzL-4P-0wN" kind="show" identifier="IngredientSegue" id="sah-7e-Aik"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WEe-iL-RK3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -153,6 +154,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pJ2-tE-5OL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="176.81159420289856" y="49.553571428571423"/>
+        </scene>
+        <!--Ingredient-->
+        <scene sceneID="bLc-P5-deU">
+            <objects>
+                <tableViewController id="yzL-4P-0wN" customClass="IngredientViewController" customModule="repEAT" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Lxh-56-8dx">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="wCy-OE-u2K">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wCy-OE-u2K" id="rvl-3U-MiU">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="yzL-4P-0wN" id="haH-og-vZe"/>
+                            <outlet property="delegate" destination="yzL-4P-0wN" id="gFL-hI-43r"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Ingredient" id="L8T-3b-kNz">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="M6K-ny-Eer"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aMW-PU-FfH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2777" y="-282"/>
         </scene>
         <!--Direction-->
         <scene sceneID="tVY-Mu-d5q">
@@ -252,7 +284,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CFS-OX-5sq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2928.985507246377" y="49.553571428571423"/>
+            <point key="canvasLocation" x="2777" y="404"/>
         </scene>
     </scenes>
     <resources>

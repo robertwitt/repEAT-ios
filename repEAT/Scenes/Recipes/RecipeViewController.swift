@@ -69,11 +69,26 @@ class RecipeViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
+        case "IngredientSegue":
+            prepareIngredientViewController(for: segue, sender: sender)
         case "DirectionSegue":
             prepareDirectionViewController(for: segue, sender: sender)
         default:
             break
         }
+    }
+    
+    private func prepareIngredientViewController(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let viewController = segue.destination as? IngredientViewController else {
+            return
+        }
+        guard let indexPath = sender as? IndexPath else {
+            return
+        }
+        
+        let ingredient = recipeController.ingredient(at: indexPath.row) ?? recipe.createIngredient()
+        viewController.ingredient = ingredient
+        viewController.delegate = self
     }
     
     private func prepareDirectionViewController(for segue: UIStoryboardSegue, sender: Any?) {
@@ -198,8 +213,7 @@ class RecipeViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch RecipeController.Section(rawValue: indexPath.section) {
         case .ingredients:
-            // TODO https://github.com/robertwitt/repEAT-ios/issues/17
-            break
+            performSegue(withIdentifier: "IngredientSegue", sender: indexPath)
         case .directions:
             performSegue(withIdentifier: "DirectionSegue", sender: indexPath)
         default:
@@ -220,6 +234,12 @@ class RecipeViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section != RecipeController.Section.details.rawValue
     }
+    
+}
+
+// MARK: - Ingredient View Controller Delegate
+
+extension RecipeViewController: IngredientViewControllerDelegate {
     
 }
 

@@ -38,6 +38,13 @@ extension Recipe {
         return ingredients?.sortedArray(using: [sortDescriptor]) as? [Ingredient] ?? []
     }
     
+    func createIngredient(_ food: Food? = nil, quantity: Float = 0.0) -> Ingredient {
+        let ingredient = Ingredient(context: managedObjectContext!)
+        ingredient.food = food
+        ingredient.quantity = quantity
+        return ingredient
+    }
+    
     func deleteIngredient(_ ingredient: Ingredient) {
         removeFromIngredients(ingredient)
         managedObjectContext?.delete(ingredient)
