@@ -9,6 +9,10 @@ import Foundation
 
 extension Ingredient {
     
+    var unit: UnitOfMeasure? {
+        return food?.baseUnit
+    }
+    
     var formattedQuantity: String? {
         guard quantity > 0 else {
             return nil
@@ -20,10 +24,10 @@ extension Ingredient {
         guard let quantity = formattedQuantity else {
             return nil
         }
-        guard let unit = unit else {
+        guard let unitCode = unit?.code else {
             return quantity
         }
-        return "\(quantity) \(unit)"
+        return "\(quantity) \(unitCode)"
     }
     
 }

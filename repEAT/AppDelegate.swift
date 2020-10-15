@@ -81,18 +81,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         recipe.name = "Spaghetti Carbonara"
         recipe.image = UIImage(named: "spaghetti-carbonara")
         
-        recipe.addIngredient(Food("Spaghetti", into: context), quantity: 8.0, unit: "oz")
-        recipe.addIngredient(Food("Eggs", into: context), quantity: 2.0, unit: "pc")
-        recipe.addIngredient(Food("Parmesan", into: context), quantity: 0.5, unit: "cups")
-        recipe.addIngredient(Food("Bacon", into: context), quantity: 4, unit: "slices")
-        recipe.addIngredient(Food("Salt", into: context))
+        for uom in uoms {
+            switch uom.code {
+            case "oz":
+                addIngredient(Food("Spaghetti", baseUnit: uom, into: context), quantity: 8.0, to: recipe)
+            case "pc":
+                addIngredient(Food("Eggs", baseUnit: uom, into: context), quantity: 2.0, to: recipe)
+            case "cups":
+                addIngredient(Food("Parmesan", baseUnit: uom, into: context), quantity: 0.5, to: recipe)
+            case "slices":
+                addIngredient(Food("Bacon", baseUnit: uom, into: context), quantity: 4.0, to: recipe)
+            default:
+                break
+            }
+        }
+        addIngredient(Food("Salt", baseUnit: nil, into: context), to: recipe)
         
-        recipe.addDirection("In a large pot of boiling salted water, cook pasta according to package instructions; reserve 1/2 cup water and drain well.")
-        recipe.addDirection("In a small bowl, whisk together eggs and Parmesan; set aside.")
-        recipe.addDirection("Heat a large skillet over medium high heat. Add bacon and cook until brown and crispy, about 6-8 minutes; reserve excess fat.")
-        recipe.addDirection("Stir in garlic until fragrant, about 1 minute. Reduce heat to low.")
-        recipe.addDirection("Working quickly, stir in pasta and egg mixture, and gently toss to combine; season with salt and pepper, to taste. Add reserved pasta water, one tablespoon at a time, until desired consistency is reached.")
-        recipe.addDirection("Serve immediately, garnished with parsley, if desired.")
+        _ = recipe.createDirection("In a large pot of boiling salted water, cook pasta according to package instructions; reserve 1/2 cup water and drain well.")
+        _ = recipe.createDirection("In a small bowl, whisk together eggs and Parmesan; set aside.")
+        _ = recipe.createDirection("Heat a large skillet over medium high heat. Add bacon and cook until brown and crispy, about 6-8 minutes; reserve excess fat.")
+        _ = recipe.createDirection("Stir in garlic until fragrant, about 1 minute. Reduce heat to low.")
+        _ = recipe.createDirection("Working quickly, stir in pasta and egg mixture, and gently toss to combine; season with salt and pepper, to taste. Add reserved pasta water, one tablespoon at a time, until desired consistency is reached.")
+        _ = recipe.createDirection("Serve immediately, garnished with parsley, if desired.")
         
         let emptyRecipe = Recipe(context: context)
         emptyRecipe.name = "Vitamin Shake"
@@ -103,6 +113,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
         }
         // swiftlint:enable line_length
+    }
+    
+    private func addIngredient(_ food: Food, quantity: Float = 0.0, to recipe: Recipe) {
+        let ingredient = Ingredient(context: recipe.managedObjectContext!)
+        ingredient.food = food
+        ingredient.quantity = quantity
+        recipe.addToIngredients(ingredient)
     }
 
     // MARK: - Core Data Saving support

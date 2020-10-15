@@ -38,7 +38,7 @@ class UnitOfMeasurePlist {
         }
         let url = URL(fileURLWithPath: path)
         let data = try Data(contentsOf: url)
-        let plist = try PropertyListSerialization.propertyList(from: data, options: .mutableContainers, format: nil) as? [[String:String]]
+        let plist = try PropertyListSerialization.propertyList(from: data, options: .mutableContainers, format: nil) as? [[String: String]]
         
         return plist ?? []
     }
