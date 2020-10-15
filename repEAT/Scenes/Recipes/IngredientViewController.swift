@@ -44,7 +44,6 @@ class IngredientViewController: UITableViewController {
         quantityTextField.text = ingredient.formattedQuantity
         
         let quantityCellEnabled = ingredient.quantityUnit != nil
-        quantityLabel.textColor = quantityCellEnabled ? .black : .gray
         quantityTextField.isEnabled = quantityCellEnabled
     }
     
@@ -56,8 +55,20 @@ class IngredientViewController: UITableViewController {
     }
     
     private func updateIngredient() {
-        ingredient.quantity = Float(quantityTextField.text ?? "0") ?? 0.0
+        ingredient.quantity = parseQuantity(from: quantityTextField.text)
         delegate?.ingredientViewController(self, didEndEditing: ingredient)
+    }
+    
+    private func parseQuantity(from string: String?) -> Ingredient.Quantity {
+        guard let string = string else {
+            return 0.0
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        let quantity = formatter.number(from: string)
+        
+        return quantity?.floatValue ?? 0.0
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
