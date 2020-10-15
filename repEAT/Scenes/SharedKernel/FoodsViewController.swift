@@ -6,42 +6,76 @@
 //
 
 import UIKit
+import CoreData
 
 class FoodsViewController: UITableViewController {
     
     weak var delegate: FoodsViewControllerDelegate?
+    
+    private var managedObjectContext: NSManagedObjectContext {
+        // TODO Find better way to get pointer to managed object context
+        // swiftlint:disable force_cast
+        return (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        // swiftlint:enable force_cast
+    }
+    
+    private var fetchedResultsController: NSFetchedResultsController<Food>!
+    private var searchController: UISearchController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        setupFetchedResultsController()
+        setupSearchController()
+    }
+    
+    private func setupFetchedResultsController() {
+        let request = NSFetchRequest<Food>(entityName: "Food")
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
+                                                              managedObjectContext: managedObjectContext,
+                                                              sectionNameKeyPath: nil,
+                                                              cacheName: nil)
+        searchFoods()
+    }
+    
+    private func searchFoods(_ searchText: String? = nil) {
+        var predicate: NSPredicate?
+        if let searchText = searchText {
+            predicate = NSPredicate(format: "name LIKE[c] %@", searchText)
+        }
+        fetchedResultsController.fetchRequest.predicate = predicate
+        
+        do {
+            try fetchedResultsController.performFetch()
+            tableView.reloadData()
+        } catch {
+            // TODO Error handling
+        }
+    }
+    
+    private func setupSearchController() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.autocapitalizationType = .none
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
     }
 
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
+    // MARK: Table View Data Source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let food = fetchedResultsController.object(at: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodCell", for: indexPath)
+        cell.textLabel?.text = food.name
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -88,6 +122,26 @@ class FoodsViewController: UITableViewController {
     }
     */
 
+}
+
+extension FoodsViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        var searchText: String?
+        if let searchBarText = searchController.searchBar.text?.trimmingCharacters(in: CharacterSet.whitespaces), !searchBarText.isEmpty {
+            searchText = "*\(searchBarText.replacingOccurrences(of: " ", with: "*"))*"
+        }
+        searchFoods(searchText)
+    }
+    
+}
+
+extension FoodsViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
 }
 
 // MARK: - Foods View Controller Delegate
