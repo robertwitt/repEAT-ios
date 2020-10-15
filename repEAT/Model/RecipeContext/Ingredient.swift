@@ -9,7 +9,7 @@ import Foundation
 
 extension Ingredient {
     
-    var unit: UnitOfMeasure? {
+    var quantityUnit: UnitOfMeasure? {
         return food?.baseUnit
     }
     
@@ -24,7 +24,7 @@ extension Ingredient {
         guard let quantity = formattedQuantity else {
             return nil
         }
-        guard let unitCode = unit?.code else {
+        guard let unitCode = quantityUnit?.code else {
             return quantity
         }
         return "\(quantity) \(unitCode)"
