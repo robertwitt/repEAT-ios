@@ -63,6 +63,23 @@ class FoodsViewController: UITableViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "FoodSegue":
+            prepareFoodViewController(for: segue, sender: sender)
+        default:
+            break
+        }
+    }
+    
+    private func prepareFoodViewController(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let viewController = (segue.destination as? UINavigationController)?.topViewController as? FoodViewController else {
+            return
+        }
+        viewController.food = Food(context: managedObjectContext)
+        viewController.delegate = self
+    }
 
     // MARK: Table View Data Source
 
@@ -86,6 +103,8 @@ class FoodsViewController: UITableViewController {
 
 }
 
+// MARK: - Search Results Updating
+
 extension FoodsViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -98,11 +117,19 @@ extension FoodsViewController: UISearchResultsUpdating {
     
 }
 
+// MARK: - Search Bar Delegate
+
 extension FoodsViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
+    
+}
+
+// MARK: - Food View Controller Delegate
+
+extension FoodsViewController: FoodViewControllerDelegate {
     
 }
 

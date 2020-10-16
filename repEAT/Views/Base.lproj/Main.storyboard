@@ -287,12 +287,37 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Foods" id="BRM-ci-ul1">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="u9S-Ek-5tw"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="u9S-Ek-5tw">
+                            <connections>
+                                <segue destination="fsh-3b-3RE" kind="popoverPresentation" identifier="FoodSegue" popoverAnchorBarButtonItem="u9S-Ek-5tw" id="bZU-M4-G9o">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="liV-tE-Z1u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3700" y="-283"/>
+        </scene>
+        <!--Food-->
+        <scene sceneID="jsI-iF-Uz1">
+            <objects>
+                <tableViewController id="JgB-HC-M88" customClass="FoodViewController" customModule="repEAT" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="g3v-dV-fn3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="JgB-HC-M88" id="B3z-ga-9dv"/>
+                            <outlet property="delegate" destination="JgB-HC-M88" id="c5e-X8-Q6j"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Food" id="G3B-gP-TbL"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Xa-N5-h6l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5534.7826086956529" y="-283.25892857142856"/>
         </scene>
         <!--Direction-->
         <scene sceneID="tVY-Mu-d5q">
@@ -392,6 +417,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CFS-OX-5sq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2777" y="404"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="HzA-vw-4US">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fsh-3b-3RE" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8sj-fa-Kui">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="JgB-HC-M88" kind="relationship" relationship="rootViewController" id="LJe-Ts-jZi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5tf-T8-nDk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4624.6376811594209" y="-283.25892857142856"/>
         </scene>
     </scenes>
     <resources>
