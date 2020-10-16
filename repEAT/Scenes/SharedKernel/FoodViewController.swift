@@ -128,4 +128,11 @@ class FoodViewController: UITableViewController {
 
 extension FoodViewController: UnitsOfMeasureViewControllerDelegate {
     
+    func unitsOfMeasureViewController(_ viewController: UnitsOfMeasureViewController, didSelectUnit unit: UnitOfMeasure) {
+        food.baseUnit = unit
+        let indexPath = IndexPath(row: Row.unit.rawValue, section: 0)
+        tableView.reloadRows(at: [indexPath], with: .none)
+        navigationController?.popViewController(animated: true)
+    }
+    
 }
