@@ -79,6 +79,26 @@ class RecipesViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            deleteRow(at: indexPath)
+        default:
+            break
+        }
+    }
+    
+    private func deleteRow(at indexPath: IndexPath) {
+        let recipe = fetchedResultsController.object(at: indexPath)
+        managedObjectContext.delete(recipe)
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            // TODO Error handling
+        }
+    }
+    
     // MARK: Actions
     
     @IBAction func addItemPressed(_ sender: Any) {
@@ -97,6 +117,8 @@ extension RecipesViewController: NSFetchedResultsControllerDelegate {
             tableView.insertRows(at: [newIndexPath!], with: .automatic)
         case .update:
             tableView.reloadRows(at: [indexPath!], with: .automatic)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
         default:
             break
         }
