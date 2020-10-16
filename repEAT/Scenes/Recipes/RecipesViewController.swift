@@ -119,6 +119,9 @@ extension RecipesViewController: NSFetchedResultsControllerDelegate {
             tableView.reloadRows(at: [indexPath!], with: .automatic)
         case .delete:
             tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .move:
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+            tableView.reloadRows(at: [newIndexPath!], with: .none)
         default:
             break
         }

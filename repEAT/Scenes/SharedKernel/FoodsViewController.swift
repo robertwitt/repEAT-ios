@@ -35,6 +35,7 @@ class FoodsViewController: UITableViewController {
                                                               managedObjectContext: managedObjectContext,
                                                               sectionNameKeyPath: nil,
                                                               cacheName: nil)
+        fetchedResultsController.delegate = self
         searchFoods()
     }
     
@@ -78,7 +79,7 @@ class FoodsViewController: UITableViewController {
             return
         }
         viewController.food = Food(context: managedObjectContext)
-        viewController.delegate = self
+        viewController.setEditing(true, animated: false)
     }
 
     // MARK: Table View Data Source
@@ -103,6 +104,28 @@ class FoodsViewController: UITableViewController {
 
 }
 
+// MARK: - Fetched Results Controller Delegate
+
+extension FoodsViewController: NSFetchedResultsControllerDelegate {
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .none)
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .none)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .none)
+        case .move:
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+            tableView.reloadRows(at: [newIndexPath!], with: .none)
+        default:
+            break
+        }
+    }
+    
+}
+
 // MARK: - Search Results Updating
 
 extension FoodsViewController: UISearchResultsUpdating {
@@ -124,12 +147,6 @@ extension FoodsViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
-    
-}
-
-// MARK: - Food View Controller Delegate
-
-extension FoodsViewController: FoodViewControllerDelegate {
     
 }
 
