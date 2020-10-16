@@ -51,6 +51,22 @@ class FoodViewController: UITableViewController {
         setEditing(false, animated: true)
         dismiss(animated: true)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "UnitSegue":
+            prepareUnitOfMeasureViewController(for: segue, sender: sender)
+        default:
+            break
+        }
+    }
+    
+    private func prepareUnitOfMeasureViewController(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let viewController = segue.destination as? UnitsOfMeasureViewController else {
+            return
+        }
+        viewController.delegate = self
+    }
 
     // MARK: Table View Data Source
 
@@ -63,7 +79,7 @@ class FoodViewController: UITableViewController {
         case .name:
             return nameCell(forRowAt: indexPath)
         default:
-            return UITableViewCell()
+            return unitCell(forRowAt: indexPath)
         }
     }
     
@@ -80,7 +96,23 @@ class FoodViewController: UITableViewController {
         return cell
     }
     
+    private func unitCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UnitCell", for: indexPath)
+        cell.textLabel?.text = NSLocalizedString("labelUnit", comment: "")
+        cell.detailTextLabel?.text = food.baseUnit?.name
+        return cell
+    }
+    
     // MARK: Table View Delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch Row(rawValue: indexPath.row) {
+        case .unit:
+            performSegue(withIdentifier: "UnitSegue", sender: nil)
+        default:
+            break
+        }
+    }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .none
@@ -90,4 +122,10 @@ class FoodViewController: UITableViewController {
         return false
     }
 
+}
+
+// MARK: - Unit of Measure View Controller Delegate
+
+extension FoodViewController: UnitsOfMeasureViewControllerDelegate {
+    
 }
