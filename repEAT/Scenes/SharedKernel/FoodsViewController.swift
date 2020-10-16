@@ -35,6 +35,7 @@ class FoodsViewController: UITableViewController {
                                                               managedObjectContext: managedObjectContext,
                                                               sectionNameKeyPath: nil,
                                                               cacheName: nil)
+        fetchedResultsController.delegate = self
         searchFoods()
     }
     
@@ -63,6 +64,23 @@ class FoodsViewController: UITableViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "FoodSegue":
+            prepareFoodViewController(for: segue, sender: sender)
+        default:
+            break
+        }
+    }
+    
+    private func prepareFoodViewController(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let viewController = (segue.destination as? UINavigationController)?.topViewController as? FoodViewController else {
+            return
+        }
+        viewController.food = Food(context: managedObjectContext)
+        viewController.setEditing(true, animated: false)
+    }
 
     // MARK: Table View Data Source
 
@@ -86,6 +104,30 @@ class FoodsViewController: UITableViewController {
 
 }
 
+// MARK: - Fetched Results Controller Delegate
+
+extension FoodsViewController: NSFetchedResultsControllerDelegate {
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .none)
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .none)
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .none)
+        case .move:
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+            tableView.reloadRows(at: [newIndexPath!], with: .none)
+        default:
+            break
+        }
+    }
+    
+}
+
+// MARK: - Search Results Updating
+
 extension FoodsViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -97,6 +139,8 @@ extension FoodsViewController: UISearchResultsUpdating {
     }
     
 }
+
+// MARK: - Search Bar Delegate
 
 extension FoodsViewController: UISearchBarDelegate {
     
