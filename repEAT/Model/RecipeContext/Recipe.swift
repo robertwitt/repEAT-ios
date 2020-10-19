@@ -21,6 +21,11 @@ extension Recipe {
         }
     }
     
+    var thumbnail: UIImage? {
+        let rect = CGRect(x: 0, y: 0, width: 60, height: 44)
+        return image?.imageCroppedTo(rect)
+    }
+    
     var sortedIngredients: [Ingredient] {
         let sortDescriptor = NSSortDescriptor(key: "food", ascending: true) { (food1, food2) -> ComparisonResult in
             guard let food1 = food1 as? Food, let food2 = food2 as? Food else {

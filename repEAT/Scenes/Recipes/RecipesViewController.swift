@@ -74,7 +74,7 @@ class RecipesViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath)
         cell.textLabel?.text = recipe.name
-        cell.imageView?.image = recipe.image
+        cell.imageView?.image = recipe.thumbnail
         
         return cell
     }

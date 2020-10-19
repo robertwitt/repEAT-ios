@@ -28,11 +28,14 @@ class RecipeViewController: UITableViewController {
                                target: self,
                                action: #selector(cancelItemPressed))
     }
+    
+    private var recipeImageView: EditableImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        setupTableViewHeader()
+        setupRecipeImageView()
+        updateTableHeaderView()
         registerTableViewCells()
     }
     
@@ -40,13 +43,17 @@ class RecipeViewController: UITableViewController {
         navigationItem.rightBarButtonItem = editButtonItem
     }
     
-    private func setupTableViewHeader() {
-        guard let image = recipe.image else {
-            return
+    private func setupRecipeImageView() {
+        recipeImageView = EditableImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200))
+        recipeImageView.changeImagePressedHandler = { () -> Void in
+            // TODO Open image picker controller
         }
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200))
-        imageView.image = image
-        tableView.tableHeaderView = imageView
+    }
+    
+    private func updateTableHeaderView() {
+        recipeImageView.image = recipe.image
+        recipeImageView.isEditing = isEditing
+        tableView.tableHeaderView = isEditing || recipe.image != nil ? recipeImageView : nil
     }
     
     private func registerTableViewCells() {
@@ -55,8 +62,10 @@ class RecipeViewController: UITableViewController {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        
         navigationItem.leftBarButtonItem = editing ? cancelButtonItem : nil
         recipeController.isEditing = editing
+        updateTableHeaderView()
         tableView.reloadData()
         
         if !editing {

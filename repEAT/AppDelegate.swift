@@ -106,6 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let emptyRecipe = Recipe(context: context)
         emptyRecipe.name = "Vitamin Shake"
+        emptyRecipe.image = UIImage(named: "vitamin-shake")
         
         do {
             try context.save()
