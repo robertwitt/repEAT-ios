@@ -55,7 +55,7 @@ class RecipeViewController: UITableViewController {
                                             message: nil,
                                             preferredStyle: .actionSheet)
         
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) || UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
             actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionPhotoLibrary", comment: ""), style: .default, handler: { (_) in
                 self.showPhotoLibrary()
             }))
