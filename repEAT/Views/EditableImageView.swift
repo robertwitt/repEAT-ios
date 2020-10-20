@@ -21,7 +21,7 @@ class EditableImageView: UIView {
         }
     }
     
-    var changeImagePressedHandler: (() -> Void)?
+    var changeImagePressedButtonHandler: (() -> Void)?
     
     private var imageView: UIImageView?
     private var changeImageButton: UIButton?
@@ -63,7 +63,7 @@ class EditableImageView: UIView {
         }
         
         let buttonActionHandler: ((UIAction) -> Void) = { (_) in
-            self.changeImagePressedHandler?()
+            self.changeImagePressedButtonHandler?()
         }
         let buttonAction = UIAction(title: "",
                                     image: UIImage(systemName: "photo.fill"),

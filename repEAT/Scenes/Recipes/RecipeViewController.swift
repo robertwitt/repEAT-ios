@@ -45,9 +45,47 @@ class RecipeViewController: UITableViewController {
     
     private func setupRecipeImageView() {
         recipeImageView = EditableImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200))
-        recipeImageView.changeImagePressedHandler = { () -> Void in
-            // TODO Open image picker controller
+        recipeImageView.changeImagePressedButtonHandler = { () -> Void in
+            self.showChangeRecipeImageOptions()
         }
+    }
+    
+    private func showChangeRecipeImageOptions() {
+        let actionSheet = UIAlertController(title: NSLocalizedString("alertTitleChangeImage", comment: ""),
+                                            message: nil,
+                                            preferredStyle: .actionSheet)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionPhotoLibrary", comment: ""), style: .default, handler: { (_) in
+                self.showPhotoLibrary()
+            }))
+        }
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionCamera", comment: ""), style: .default, handler: { (_) in
+                self.showCamera()
+            }))
+        }
+        
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionDelete", comment: ""), style: .destructive, handler: { (_) in
+            self.deleteRecipeImage()
+        }))
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionCancel", comment: ""), style: .cancel))
+        
+        present(actionSheet, animated: true)
+    }
+    
+    private func showPhotoLibrary() {
+        
+    }
+    
+    private func showCamera() {
+        
+    }
+    
+    private func deleteRecipeImage() {
+        recipe.image = nil
+        updateTableHeaderView()
     }
     
     private func updateTableHeaderView() {

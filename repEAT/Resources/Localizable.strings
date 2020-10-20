@@ -11,6 +11,11 @@
 "titleIngredients" = "Ingredients";
 "titleDirections" = "Directions";
 "placeholderRecipeName" = "Recipe name";
+"alertTitleChangeImage" = "Change recipe image";
+"actionPhotoLibrary" = "Photo libary";
+"actionCamera" = "Camera";
+"actionDelete" = "Delete image";
+"actionCancel" = "Cancel";
 
 // Ingredient View Controller
 "labelIngredientQuantity" = "Quantity";
