@@ -30,13 +30,5 @@ class EditableImageView: UIView {
         addSubview(imageView)
         self.imageView = imageView
     }
-    
-    private func calculateSize() -> CGSize {
-        let width = frame.size.width
-        let imageWidth = image?.size.width ?? width
-        let imageHeight: CGFloat = image?.size.height ?? (isEditing ? 200 : 0)
-        let height = width * imageHeight / imageWidth
-        return CGSize(width: width, height: height)
-    }
 
 }

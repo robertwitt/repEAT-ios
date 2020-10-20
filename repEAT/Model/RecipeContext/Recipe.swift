@@ -22,7 +22,7 @@ extension Recipe {
     }
     
     var thumbnail: UIImage? {
-        let rect = CGRect(x: 0, y: 0, width: 60, height: 44)
+        let rect = CGRect(x: 0, y: 0, width: 66, height: 44)
         return image?.imageCroppedTo(rect)
     }
     
