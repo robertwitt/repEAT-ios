@@ -55,7 +55,7 @@ class RecipeViewController: UITableViewController {
                                             message: nil,
                                             preferredStyle: .actionSheet)
         
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) || UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionPhotoLibrary", comment: ""), style: .default, handler: { (_) in
                 self.showPhotoLibrary()
             }))
@@ -76,7 +76,11 @@ class RecipeViewController: UITableViewController {
     }
     
     private func showPhotoLibrary() {
-        
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true)
     }
     
     private func showCamera() {
@@ -84,7 +88,11 @@ class RecipeViewController: UITableViewController {
     }
     
     private func deleteRecipeImage() {
-        recipe.image = nil
+        setRecipeImage(nil)
+    }
+    
+    private func setRecipeImage(_ image: UIImage?) {
+        recipe.image = image
         updateTableHeaderView()
     }
     
@@ -296,6 +304,24 @@ class RecipeViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section != RecipeController.Section.details.rawValue
+    }
+    
+}
+
+// MARK: - Image Picker Controller Delegate
+
+extension RecipeViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        picker.dismiss(animated: true)
+        guard let selectedImage = info[.editedImage] as? UIImage else {
+            return
+        }
+        setRecipeImage(selectedImage)
     }
     
 }
