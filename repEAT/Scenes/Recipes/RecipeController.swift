@@ -159,19 +159,5 @@ class RecipeController {
         let newPosition = Direction.Position(destinationIndexPath.row + 1)
         direction?.setPosition(newPosition)
     }
-    
-    func saveChanges() {
-        if managedObjectContext.hasChanges {
-            do {
-                try managedObjectContext.save()
-            } catch {
-                // TODO Error handling
-            }
-        }
-    }
-    
-    func discardChanges() {
-        managedObjectContext.rollback()
-    }
 
 }

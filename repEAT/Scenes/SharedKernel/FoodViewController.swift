@@ -9,6 +9,7 @@ import UIKit
 
 class FoodViewController: UITableViewController {
     
+    weak var delegate: FoodViewControllerDelegate?
     var food: Food!
     
     private enum Row: Int {
@@ -42,14 +43,12 @@ class FoodViewController: UITableViewController {
         navigationItem.leftBarButtonItem = editing ? cancelButtonItem : nil
         
         if !editing {
-            dismiss(animated: true)
+            delegate?.foodViewController(self, didEndEditingFood: food)
         }
     }
     
     @objc private func cancelItemPressed() {
-        food.managedObjectContext?.delete(food)
-        setEditing(false, animated: true)
-        dismiss(animated: true)
+        delegate?.foodViewControllerDidCancel(self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -134,5 +133,23 @@ extension FoodViewController: UnitsOfMeasureViewControllerDelegate {
         tableView.reloadRows(at: [indexPath], with: .none)
         navigationController?.popViewController(animated: true)
     }
+    
+}
+
+// MARK: - Food View Controller
+
+protocol FoodViewControllerDelegate: class {
+    
+    func foodViewControllerDidCancel(_ viewController: FoodViewController)
+    
+    func foodViewController(_ viewController: FoodViewController, didEndEditingFood food: Food)
+    
+}
+
+extension FoodViewControllerDelegate {
+    
+    func foodViewControllerDidCancel(_ viewController: FoodViewController) {}
+    
+    func foodViewController(_ viewController: FoodViewController, didEndEditingFood food: Food) {}
     
 }

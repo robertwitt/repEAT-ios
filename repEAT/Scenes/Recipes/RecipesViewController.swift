@@ -54,6 +54,7 @@ class RecipesViewController: UITableViewController {
             return
         }
         
+        viewController.delegate = self
         if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
             viewController.recipe = fetchedResultsController.object(at: indexPath)
         } else {
@@ -127,4 +128,32 @@ extension RecipesViewController: NSFetchedResultsControllerDelegate {
         }
     }
 
+}
+
+// MARK: - Recipe View Controller Delegate
+
+extension RecipesViewController: RecipeViewControllerDelegate {
+    
+    func recipeViewControllerDidCancel(_ viewController: RecipeViewController) {
+        if viewController.isCreatingRecipe {
+            managedObjectContext.delete(viewController.recipe)
+            navigationController?.popViewController(animated: true)
+        } else {
+            managedObjectContext.rollback()
+        }
+    }
+    
+    func recipeViewController(_ viewController: RecipeViewController, didEndEditingRecipe recipe: Recipe) {
+        if managedObjectContext.hasChanges {
+            do {
+                try managedObjectContext.save()
+            } catch {
+                // TODO Error handling
+            }
+        }
+        if viewController.isCreatingRecipe {
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
 }
