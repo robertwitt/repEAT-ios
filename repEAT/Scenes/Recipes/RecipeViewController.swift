@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import AVFoundation
 
 class RecipeViewController: UITableViewController {
     
@@ -28,11 +29,14 @@ class RecipeViewController: UITableViewController {
                                target: self,
                                action: #selector(cancelItemPressed))
     }
+    
+    private var recipeImageView: EditableImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavBar()
-        setupTableViewHeader()
+        setupRecipeImageView()
+        updateTableHeaderView()
         registerTableViewCells()
     }
     
@@ -40,13 +44,106 @@ class RecipeViewController: UITableViewController {
         navigationItem.rightBarButtonItem = editButtonItem
     }
     
-    private func setupTableViewHeader() {
-        guard let image = recipe.image else {
-            return
+    private func setupRecipeImageView() {
+        recipeImageView = EditableImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200))
+        recipeImageView.changeImagePressedButtonHandler = { () -> Void in
+            self.showChangeRecipeImageOptions()
         }
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200))
-        imageView.image = image
-        tableView.tableHeaderView = imageView
+    }
+    
+    private func showChangeRecipeImageOptions() {
+        let actionSheet = UIAlertController(title: NSLocalizedString("alertTitleChangeImage", comment: ""),
+                                            message: nil,
+                                            preferredStyle: .actionSheet)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionPhotoLibrary", comment: ""), style: .default, handler: { (_) in
+                self.showPhotoLibrary()
+            }))
+        }
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionCamera", comment: ""), style: .default, handler: { (_) in
+                self.showCamera()
+            }))
+        }
+        
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionDelete", comment: ""), style: .destructive, handler: { (_) in
+            self.deleteRecipeImage()
+        }))
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionCancel", comment: ""), style: .cancel))
+        
+        present(actionSheet, animated: true)
+    }
+    
+    private func showPhotoLibrary() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true)
+    }
+    
+    private func showCamera() {
+        switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
+        case .denied:
+            showAlertToEnableCamera()
+        case .notDetermined:
+            requestCameraAccess()
+        default:
+            showCameraIfAccessGranted()
+        }
+    }
+    
+    private func showAlertToEnableCamera() {
+        let alert = UIAlertController(title: NSLocalizedString("alertTitleCameraUnavailable", comment: ""),
+                                      message: NSLocalizedString("alertMessageCameraUnavailable", comment: ""),
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("actionOK", comment: ""), style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("actionSettings", comment: ""), style: .default, handler: { (_) in
+            self.openSettings()
+        }))
+        
+        present(alert, animated: true)
+    }
+    
+    private func openSettings() {
+        if let settingsURL = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsURL) {
+            UIApplication.shared.open(settingsURL)
+        }
+    }
+    
+    private func requestCameraAccess() {
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { (granted) in
+            if granted {
+                DispatchQueue.main.async {
+                    self.showCameraIfAccessGranted()
+                }
+            }
+        }
+    }
+    
+    private func showCameraIfAccessGranted() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true)
+    }
+    
+    private func deleteRecipeImage() {
+        setRecipeImage(nil)
+    }
+    
+    private func setRecipeImage(_ image: UIImage?) {
+        recipe.image = image
+        updateTableHeaderView()
+    }
+    
+    private func updateTableHeaderView() {
+        recipeImageView.image = recipe.image
+        recipeImageView.isEditing = isEditing
+        tableView.tableHeaderView = isEditing || recipe.image != nil ? recipeImageView : nil
     }
     
     private func registerTableViewCells() {
@@ -55,8 +152,10 @@ class RecipeViewController: UITableViewController {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        
         navigationItem.leftBarButtonItem = editing ? cancelButtonItem : nil
         recipeController.isEditing = editing
+        updateTableHeaderView()
         tableView.reloadData()
         
         if !editing {
@@ -249,6 +348,24 @@ class RecipeViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section != RecipeController.Section.details.rawValue
+    }
+    
+}
+
+// MARK: - Image Picker Controller Delegate
+
+extension RecipeViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        picker.dismiss(animated: true)
+        guard let selectedImage = info[.editedImage] as? UIImage else {
+            return
+        }
+        setRecipeImage(selectedImage)
     }
     
 }

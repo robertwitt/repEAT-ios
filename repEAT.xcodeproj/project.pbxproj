@@ -16,6 +16,8 @@
 		961E056B25288B1B00C15C4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 961E056925288B1B00C15C4C /* LaunchScreen.storyboard */; };
 		961E057625288B1C00C15C4C /* repEATTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E057525288B1C00C15C4C /* repEATTests.swift */; };
 		961E058125288B1C00C15C4C /* repEATUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E058025288B1C00C15C4C /* repEATUITests.swift */; };
+		966170A0253D7F780089EDFA /* EditableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9661709F253D7F780089EDFA /* EditableImageView.swift */; };
+		966170A9253E1E040089EDFA /* UIImage+Cropping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966170A8253E1E040089EDFA /* UIImage+Cropping.swift */; };
 		96896ED32529E14600D4816B /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96896ED22529E14600D4816B /* RecipeViewController.swift */; };
 		96896ED82529E78200D4816B /* RecipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96896ED72529E78200D4816B /* RecipeController.swift */; };
 		96896EE02529ECC900D4816B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96896EDF2529ECC900D4816B /* Localizable.strings */; };
@@ -75,6 +77,8 @@
 		961E05B22528947500C15C4C /* shared-kernel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shared-kernel.png"; sourceTree = "<group>"; };
 		961E05B32528947500C15C4C /* recipe-context.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipe-context.png"; sourceTree = "<group>"; };
 		961E05B42528949700C15C4C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9661709F253D7F780089EDFA /* EditableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableImageView.swift; sourceTree = "<group>"; };
+		966170A8253E1E040089EDFA /* UIImage+Cropping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Cropping.swift"; sourceTree = "<group>"; };
 		96896ED22529E14600D4816B /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
 		96896ED72529E78200D4816B /* RecipeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeController.swift; sourceTree = "<group>"; };
 		96896EDF2529ECC900D4816B /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 			children = (
 				961E055B25288B1A00C15C4C /* AppDelegate.swift */,
 				961E059D25288BD900C15C4C /* CoreData */,
+				966170A7253E1DEA0089EDFA /* Extension */,
 				969BD5D02537305700CC7DF2 /* Helper */,
 				96D35CD32529CD8400D1CBD8 /* Model */,
 				961E059C25288BCE00C15C4C /* Resources */,
@@ -181,6 +186,7 @@
 				96896F09252C85FF00D4816B /* Cells */,
 				961E056125288B1A00C15C4C /* Main.storyboard */,
 				961E056925288B1B00C15C4C /* LaunchScreen.storyboard */,
+				9661709F253D7F780089EDFA /* EditableImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -188,6 +194,7 @@
 		961E059825288BC700C15C4C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				966170B32540215C0089EDFA /* Common */,
 				963C8CFD2529D91B0013C808 /* Recipes */,
 				969BD5EC25384D1700CC7DF2 /* SharedKernel */,
 				961E055D25288B1A00C15C4C /* SceneDelegate.swift */,
@@ -243,6 +250,21 @@
 				969BD5B825354D7A00CC7DF2 /* DirectionViewController.swift */,
 			);
 			path = Recipes;
+			sourceTree = "<group>";
+		};
+		966170A7253E1DEA0089EDFA /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				966170A8253E1E040089EDFA /* UIImage+Cropping.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		966170B32540215C0089EDFA /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		96896F09252C85FF00D4816B /* Cells */ = {
@@ -460,6 +482,7 @@
 				969BD5B925354D7A00CC7DF2 /* DirectionViewController.swift in Sources */,
 				96896F0C252C861800D4816B /* EditableTableViewCell.swift in Sources */,
 				969BD5EE25384D4F00CC7DF2 /* FoodsViewController.swift in Sources */,
+				966170A9253E1E040089EDFA /* UIImage+Cropping.swift in Sources */,
 				961E056025288B1A00C15C4C /* RecipesViewController.swift in Sources */,
 				969BD5DD25383FD900CC7DF2 /* IngredientViewController.swift in Sources */,
 				96896ED32529E14600D4816B /* RecipeViewController.swift in Sources */,
@@ -467,6 +490,7 @@
 				961E055C25288B1A00C15C4C /* AppDelegate.swift in Sources */,
 				961E055E25288B1A00C15C4C /* SceneDelegate.swift in Sources */,
 				96D35CD52529CDB800D1CBD8 /* Recipe.swift in Sources */,
+				966170A0253D7F780089EDFA /* EditableImageView.swift in Sources */,
 				96D35CDA2529D11600D1CBD8 /* Food.swift in Sources */,
 				969BD610253A083B00CC7DF2 /* UnitsOfMeasureViewController.swift in Sources */,
 				969BD5BE2535C82F00CC7DF2 /* Direction.swift in Sources */,

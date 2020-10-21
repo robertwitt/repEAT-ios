@@ -11,6 +11,15 @@
 "titleIngredients" = "Ingredients";
 "titleDirections" = "Directions";
 "placeholderRecipeName" = "Recipe name";
+"alertTitleChangeImage" = "Change recipe image";
+"actionPhotoLibrary" = "Photo libary";
+"actionCamera" = "Camera";
+"actionDelete" = "Delete image";
+"actionCancel" = "Cancel";
+"alertTitleCameraUnavailable" = "Unable to access Camera";
+"alertMessageCameraUnavailable" = "To turn on camera access, choose Settings > Privacy > Camera and turn on Camera access for the repEAT app.";
+"actionOK" = "OK";
+"actionSettings" = "Settings";
 
 // Ingredient View Controller
 "labelIngredientQuantity" = "Quantity";
