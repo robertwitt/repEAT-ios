@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import AVFoundation
 
 class RecipeViewController: UITableViewController {
     
@@ -84,7 +85,50 @@ class RecipeViewController: UITableViewController {
     }
     
     private func showCamera() {
+        switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
+        case .denied:
+            showAlertToEnableCamera()
+        case .notDetermined:
+            requestCameraAccess()
+        default:
+            showCameraIfAccessGranted()
+        }
+    }
+    
+    private func showAlertToEnableCamera() {
+        let alert = UIAlertController(title: NSLocalizedString("alertTitleCameraUnavailable", comment: ""),
+                                      message: NSLocalizedString("alertMessageCameraUnavailable", comment: ""),
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("actionOK", comment: ""), style: .cancel))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("actionSettings", comment: ""), style: .default, handler: { (_) in
+            self.openSettings()
+        }))
         
+        present(alert, animated: true)
+    }
+    
+    private func openSettings() {
+        if let settingsURL = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsURL) {
+            UIApplication.shared.open(settingsURL)
+        }
+    }
+    
+    private func requestCameraAccess() {
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { (granted) in
+            if granted {
+                DispatchQueue.main.async {
+                    self.showCameraIfAccessGranted()
+                }
+            }
+        }
+    }
+    
+    private func showCameraIfAccessGranted() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = true
+        present(imagePickerController, animated: true)
     }
     
     private func deleteRecipeImage() {

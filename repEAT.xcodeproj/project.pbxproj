@@ -194,6 +194,7 @@
 		961E059825288BC700C15C4C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				966170B32540215C0089EDFA /* Common */,
 				963C8CFD2529D91B0013C808 /* Recipes */,
 				969BD5EC25384D1700CC7DF2 /* SharedKernel */,
 				961E055D25288B1A00C15C4C /* SceneDelegate.swift */,
@@ -257,6 +258,13 @@
 				966170A8253E1E040089EDFA /* UIImage+Cropping.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		966170B32540215C0089EDFA /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		96896F09252C85FF00D4816B /* Cells */ = {
