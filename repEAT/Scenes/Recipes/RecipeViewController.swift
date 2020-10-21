@@ -11,6 +11,8 @@ import AVFoundation
 
 class RecipeViewController: UITableViewController {
     
+    weak var delegate: RecipeViewControllerDelegate?
+    
     var recipe: Recipe {
         get {
             return recipeController.recipe
@@ -153,30 +155,40 @@ class RecipeViewController: UITableViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         
-        navigationItem.leftBarButtonItem = editing ? cancelButtonItem : nil
+        if !editing {
+            updateRecipe()
+        }
+        
         recipeController.isEditing = editing
+        navigationItem.leftBarButtonItem = editing ? cancelButtonItem : nil
         updateTableHeaderView()
         tableView.reloadData()
-        
-        if !editing {
+    }
+    
+    private func updateRecipe() {
+        if isCancellationRequested {
+            cancelEditing()
+        } else {
             saveRecipe()
         }
     }
     
+    private func cancelEditing() {
+        delegate?.recipeViewControllerDidCancel(self)
+        isCancellationRequested = false
+    }
+    
     private func saveRecipe() {
-        recipeController.saveChanges()
+        delegate?.recipeViewController(self, didEndEditingRecipe: recipe)
         isCreatingRecipe = false
     }
     
     @objc private func cancelItemPressed() {
-        recipeController.discardChanges()
-        
-        if isCreatingRecipe {
-            navigationController?.popViewController(animated: true)
-        } else {
-            setEditing(false, animated: true)
-        }
+        isCancellationRequested = true
+        setEditing(false, animated: true)
     }
+    
+    private var isCancellationRequested = false
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
@@ -397,5 +409,23 @@ extension RecipeViewController: DirectionViewControllerDelegate {
     func directionViewController(_ viewController: DirectionViewController, directionToAddAfter direction: Direction) -> Direction {
         return recipe.createDirection()
     }
+    
+}
+
+// MARK: - Recipe View Controller
+
+protocol RecipeViewControllerDelegate: class {
+    
+    func recipeViewControllerDidCancel(_ viewController: RecipeViewController)
+    
+    func recipeViewController(_ viewController: RecipeViewController, didEndEditingRecipe recipe: Recipe)
+    
+}
+
+extension RecipeViewControllerDelegate {
+    
+    func recipeViewControllerDidCancel(_ viewController: RecipeViewController) {}
+    
+    func recipeViewController(_ viewController: RecipeViewController, didEndEditingRecipe recipe: Recipe) {}
     
 }

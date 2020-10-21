@@ -78,6 +78,8 @@ class FoodsViewController: UITableViewController {
         guard let viewController = (segue.destination as? UINavigationController)?.topViewController as? FoodViewController else {
             return
         }
+        
+        viewController.delegate = self
         viewController.food = Food(context: managedObjectContext)
         viewController.setEditing(true, animated: false)
     }
@@ -146,6 +148,21 @@ extension FoodsViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+    
+}
+
+// MARK: - Food View Controller Delegate
+
+extension FoodsViewController: FoodViewControllerDelegate {
+    
+    func foodViewControllerDidCancel(_ viewController: FoodViewController) {
+        managedObjectContext.delete(viewController.food)
+        viewController.dismiss(animated: true)
+    }
+    
+    func foodViewController(_ viewController: FoodViewController, didEndEditingFood food: Food) {
+        viewController.dismiss(animated: true)
     }
     
 }
