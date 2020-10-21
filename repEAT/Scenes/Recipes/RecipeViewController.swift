@@ -101,16 +101,10 @@ class RecipeViewController: UITableViewController {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("actionOK", comment: ""), style: .cancel))
         alert.addAction(UIAlertAction(title: NSLocalizedString("actionSettings", comment: ""), style: .default, handler: { (_) in
-            self.openSettings()
+            AppDelegate.singleton.openSettings()
         }))
         
         present(alert, animated: true)
-    }
-    
-    private func openSettings() {
-        if let settingsURL = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsURL) {
-            UIApplication.shared.open(settingsURL)
-        }
     }
     
     private func requestCameraAccess() {
