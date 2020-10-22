@@ -9,41 +9,25 @@ import UIKit
 import CoreData
 import AVFoundation
 
-class RecipeViewController: UITableViewController {
-    
-    weak var delegate: RecipeViewControllerDelegate?
+class RecipeViewController: ObjectViewController<Recipe> {
     
     var recipe: Recipe {
         get {
-            return recipeController.recipe
+            return object
         }
         set {
+            object = newValue
             recipeController = RecipeController(with: newValue)
         }
     }
     
-    var isCreatingRecipe = false
-    
     private var recipeController: RecipeController!
-    
-    private var cancelButtonItem: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .cancel,
-                               target: self,
-                               action: #selector(cancelItemPressed))
-    }
-    
     private var recipeImageView: EditableImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavBar()
         setupRecipeImageView()
         updateTableHeaderView()
-        registerTableViewCells()
-    }
-    
-    private func setupNavBar() {
-        navigationItem.rightBarButtonItem = editButtonItem
     }
     
     private func setupRecipeImageView() {
@@ -103,16 +87,10 @@ class RecipeViewController: UITableViewController {
                                       preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("actionOK", comment: ""), style: .cancel))
         alert.addAction(UIAlertAction(title: NSLocalizedString("actionSettings", comment: ""), style: .default, handler: { (_) in
-            self.openSettings()
+            AppDelegate.singleton.openSettings()
         }))
         
         present(alert, animated: true)
-    }
-    
-    private func openSettings() {
-        if let settingsURL = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsURL) {
-            UIApplication.shared.open(settingsURL)
-        }
     }
     
     private func requestCameraAccess() {
@@ -148,47 +126,25 @@ class RecipeViewController: UITableViewController {
         tableView.tableHeaderView = isEditing || recipe.image != nil ? recipeImageView : nil
     }
     
-    private func registerTableViewCells() {
+    override func registerCustomCells() {
         EditableTableViewCell.register(in: tableView, reuseIdentifier: EditableTableViewCell.reuseIdentifier)
     }
     
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        
-        if !editing {
-            updateRecipe()
-        }
-        
-        recipeController.isEditing = editing
-        navigationItem.leftBarButtonItem = editing ? cancelButtonItem : nil
+    override func didBeginEditing() {
+        super.didBeginEditing()
+        updateUI()
+    }
+    
+    override func didEndEditing() {
+        super.didEndEditing()
+        updateUI()
+    }
+    
+    private func updateUI() {
+        recipeController.isEditing = isEditing
         updateTableHeaderView()
         tableView.reloadData()
     }
-    
-    private func updateRecipe() {
-        if isCancellationRequested {
-            cancelEditing()
-        } else {
-            saveRecipe()
-        }
-    }
-    
-    private func cancelEditing() {
-        delegate?.recipeViewControllerDidCancel(self)
-        isCancellationRequested = false
-    }
-    
-    private func saveRecipe() {
-        delegate?.recipeViewController(self, didEndEditingRecipe: recipe)
-        isCreatingRecipe = false
-    }
-    
-    @objc private func cancelItemPressed() {
-        isCancellationRequested = true
-        setEditing(false, animated: true)
-    }
-    
-    private var isCancellationRequested = false
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
@@ -409,23 +365,5 @@ extension RecipeViewController: DirectionViewControllerDelegate {
     func directionViewController(_ viewController: DirectionViewController, directionToAddAfter direction: Direction) -> Direction {
         return recipe.createDirection()
     }
-    
-}
-
-// MARK: - Recipe View Controller
-
-protocol RecipeViewControllerDelegate: class {
-    
-    func recipeViewControllerDidCancel(_ viewController: RecipeViewController)
-    
-    func recipeViewController(_ viewController: RecipeViewController, didEndEditingRecipe recipe: Recipe)
-    
-}
-
-extension RecipeViewControllerDelegate {
-    
-    func recipeViewControllerDidCancel(_ viewController: RecipeViewController) {}
-    
-    func recipeViewController(_ viewController: RecipeViewController, didEndEditingRecipe recipe: Recipe) {}
     
 }

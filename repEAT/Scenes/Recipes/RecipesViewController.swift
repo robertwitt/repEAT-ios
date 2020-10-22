@@ -18,6 +18,7 @@ class RecipesViewController: UITableViewController {
     }
     
     private var fetchedResultsController: NSFetchedResultsController<Recipe>!
+    private var createdRecipe: Recipe?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +59,8 @@ class RecipesViewController: UITableViewController {
         if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
             viewController.recipe = fetchedResultsController.object(at: indexPath)
         } else {
-            viewController.recipe = Recipe(context: managedObjectContext)
-            viewController.isCreatingRecipe = true
+            createdRecipe = Recipe(context: managedObjectContext)
+            viewController.recipe = createdRecipe!
             viewController.setEditing(true, animated: false)
         }
     }
@@ -130,29 +131,26 @@ extension RecipesViewController: NSFetchedResultsControllerDelegate {
 
 }
 
-// MARK: - Recipe View Controller Delegate
+// MARK: - Object View Controller Delegate
 
-extension RecipesViewController: RecipeViewControllerDelegate {
+extension RecipesViewController: ObjectViewControllerDelegate {
     
-    func recipeViewControllerDidCancel(_ viewController: RecipeViewController) {
-        if viewController.isCreatingRecipe {
-            managedObjectContext.delete(viewController.recipe)
+    func objectViewControllerDidCancel(_ viewController: UIViewController) {
+        if let createdRecipe = createdRecipe {
+            managedObjectContext.delete(createdRecipe)
             navigationController?.popViewController(animated: true)
         } else {
             managedObjectContext.rollback()
         }
     }
     
-    func recipeViewController(_ viewController: RecipeViewController, didEndEditingRecipe recipe: Recipe) {
+    func objectViewController(_ viewController: UIViewController, didEndEditing object: NSManagedObject) {
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
             } catch {
                 // TODO Error handling
             }
-        }
-        if viewController.isCreatingRecipe {
-            navigationController?.popViewController(animated: true)
         }
     }
     

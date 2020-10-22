@@ -18,6 +18,7 @@
 		961E058125288B1C00C15C4C /* repEATUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961E058025288B1C00C15C4C /* repEATUITests.swift */; };
 		966170A0253D7F780089EDFA /* EditableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9661709F253D7F780089EDFA /* EditableImageView.swift */; };
 		966170A9253E1E040089EDFA /* UIImage+Cropping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966170A8253E1E040089EDFA /* UIImage+Cropping.swift */; };
+		966170BE254164BC0089EDFA /* ObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966170BD254164BC0089EDFA /* ObjectViewController.swift */; };
 		96896ED32529E14600D4816B /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96896ED22529E14600D4816B /* RecipeViewController.swift */; };
 		96896ED82529E78200D4816B /* RecipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96896ED72529E78200D4816B /* RecipeController.swift */; };
 		96896EE02529ECC900D4816B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96896EDF2529ECC900D4816B /* Localizable.strings */; };
@@ -79,6 +80,7 @@
 		961E05B42528949700C15C4C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9661709F253D7F780089EDFA /* EditableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableImageView.swift; sourceTree = "<group>"; };
 		966170A8253E1E040089EDFA /* UIImage+Cropping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Cropping.swift"; sourceTree = "<group>"; };
+		966170BD254164BC0089EDFA /* ObjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectViewController.swift; sourceTree = "<group>"; };
 		96896ED22529E14600D4816B /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
 		96896ED72529E78200D4816B /* RecipeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeController.swift; sourceTree = "<group>"; };
 		96896EDF2529ECC900D4816B /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 		966170B32540215C0089EDFA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				966170BD254164BC0089EDFA /* ObjectViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 				961E056025288B1A00C15C4C /* RecipesViewController.swift in Sources */,
 				969BD5DD25383FD900CC7DF2 /* IngredientViewController.swift in Sources */,
 				96896ED32529E14600D4816B /* RecipeViewController.swift in Sources */,
+				966170BE254164BC0089EDFA /* ObjectViewController.swift in Sources */,
 				969BD5FA2539A20000CC7DF2 /* FoodViewController.swift in Sources */,
 				961E055C25288B1A00C15C4C /* AppDelegate.swift in Sources */,
 				961E055E25288B1A00C15C4C /* SceneDelegate.swift in Sources */,

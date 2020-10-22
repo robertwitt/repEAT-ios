@@ -7,10 +7,16 @@
 
 import UIKit
 
-class FoodViewController: UITableViewController {
+class FoodViewController: ObjectViewController<Food> {
     
-    weak var delegate: FoodViewControllerDelegate?
-    var food: Food!
+    var food: Food! {
+        get {
+            return object
+        }
+        set {
+            object = newValue
+        }
+    }
     
     private enum Row: Int {
         case name = 0
@@ -18,37 +24,8 @@ class FoodViewController: UITableViewController {
         static let count = 2
     }
     
-    private var cancelButtonItem: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .cancel,
-                               target: self,
-                               action: #selector(cancelItemPressed))
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupNavBar()
-        registerTableViewCells()
-    }
-    
-    private func setupNavBar() {
-        navigationItem.rightBarButtonItem = editButtonItem
-    }
-    
-    private func registerTableViewCells() {
+    override func registerCustomCells() {
         EditableTableViewCell.register(in: tableView, reuseIdentifier: EditableTableViewCell.reuseIdentifier)
-    }
-    
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        navigationItem.leftBarButtonItem = editing ? cancelButtonItem : nil
-        
-        if !editing {
-            delegate?.foodViewController(self, didEndEditingFood: food)
-        }
-    }
-    
-    @objc private func cancelItemPressed() {
-        delegate?.foodViewControllerDidCancel(self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -133,23 +110,5 @@ extension FoodViewController: UnitsOfMeasureViewControllerDelegate {
         tableView.reloadRows(at: [indexPath], with: .none)
         navigationController?.popViewController(animated: true)
     }
-    
-}
-
-// MARK: - Food View Controller
-
-protocol FoodViewControllerDelegate: class {
-    
-    func foodViewControllerDidCancel(_ viewController: FoodViewController)
-    
-    func foodViewController(_ viewController: FoodViewController, didEndEditingFood food: Food)
-    
-}
-
-extension FoodViewControllerDelegate {
-    
-    func foodViewControllerDidCancel(_ viewController: FoodViewController) {}
-    
-    func foodViewController(_ viewController: FoodViewController, didEndEditingFood food: Food) {}
     
 }
