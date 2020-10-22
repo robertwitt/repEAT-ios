@@ -22,6 +22,7 @@ class RecipeViewController: ObjectViewController<Recipe> {
     
     private var recipeController: RecipeController!
     private var recipeImageView: EditableImageView!
+    private var changeImageController: ChangeImageController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,91 +33,16 @@ class RecipeViewController: ObjectViewController<Recipe> {
     private func setupRecipeImageView() {
         recipeImageView = EditableImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 200))
         recipeImageView.changeImagePressedButtonHandler = { () -> Void in
-            self.showChangeRecipeImageOptions()
+            self.showChangeRecipeController()
         }
     }
     
-    private func showChangeRecipeImageOptions() {
-        let actionSheet = UIAlertController(title: NSLocalizedString("alertTitleChangeImage", comment: ""),
-                                            message: nil,
-                                            preferredStyle: .actionSheet)
-        
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionPhotoLibrary", comment: ""), style: .default, handler: { (_) in
-                self.showPhotoLibrary()
-            }))
+    private func showChangeRecipeController() {
+        if changeImageController == nil {
+            changeImageController = ChangeImageController()
+            changeImageController?.delegate = self
         }
-        
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionCamera", comment: ""), style: .default, handler: { (_) in
-                self.showCamera()
-            }))
-        }
-        
-        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionDelete", comment: ""), style: .destructive, handler: { (_) in
-            self.deleteRecipeImage()
-        }))
-        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("actionCancel", comment: ""), style: .cancel))
-        
-        present(actionSheet, animated: true)
-    }
-    
-    private func showPhotoLibrary() {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .photoLibrary
-        imagePickerController.allowsEditing = true
-        present(imagePickerController, animated: true)
-    }
-    
-    private func showCamera() {
-        switch AVCaptureDevice.authorizationStatus(for: AVMediaType.video) {
-        case .denied:
-            showAlertToEnableCamera()
-        case .notDetermined:
-            requestCameraAccess()
-        default:
-            showCameraIfAccessGranted()
-        }
-    }
-    
-    private func showAlertToEnableCamera() {
-        let alert = UIAlertController(title: NSLocalizedString("alertTitleCameraUnavailable", comment: ""),
-                                      message: NSLocalizedString("alertMessageCameraUnavailable", comment: ""),
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("actionOK", comment: ""), style: .cancel))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("actionSettings", comment: ""), style: .default, handler: { (_) in
-            AppDelegate.singleton.openSettings()
-        }))
-        
-        present(alert, animated: true)
-    }
-    
-    private func requestCameraAccess() {
-        AVCaptureDevice.requestAccess(for: AVMediaType.video) { (granted) in
-            if granted {
-                DispatchQueue.main.async {
-                    self.showCameraIfAccessGranted()
-                }
-            }
-        }
-    }
-    
-    private func showCameraIfAccessGranted() {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .camera
-        imagePickerController.allowsEditing = true
-        present(imagePickerController, animated: true)
-    }
-    
-    private func deleteRecipeImage() {
-        setRecipeImage(nil)
-    }
-    
-    private func setRecipeImage(_ image: UIImage?) {
-        recipe.image = image
-        updateTableHeaderView()
+        changeImageController?.present(onto: self)
     }
     
     private func updateTableHeaderView() {
@@ -131,15 +57,15 @@ class RecipeViewController: ObjectViewController<Recipe> {
     
     override func didBeginEditing() {
         super.didBeginEditing()
-        updateUI()
+        updateView()
     }
     
     override func didEndEditing() {
         super.didEndEditing()
-        updateUI()
+        updateView()
     }
     
-    private func updateUI() {
+    private func updateView() {
         recipeController.isEditing = isEditing
         updateTableHeaderView()
         tableView.reloadData()
@@ -319,20 +245,21 @@ class RecipeViewController: ObjectViewController<Recipe> {
     
 }
 
-// MARK: - Image Picker Controller Delegate
+// MARK: - Change Image Controller Delegate
 
-extension RecipeViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+extension RecipeViewController: ChangeImageControllerDelegate {
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true)
+    func changeImageControllerDidDeleteImage(_ viewController: ChangeImageController) {
+        setRecipeImage(nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        picker.dismiss(animated: true)
-        guard let selectedImage = info[.editedImage] as? UIImage else {
-            return
-        }
-        setRecipeImage(selectedImage)
+    func changeImageController(_ viewController: ChangeImageController, didSelect image: UIImage) {
+        setRecipeImage(image)
+    }
+    
+    private func setRecipeImage(_ image: UIImage?) {
+        recipe.image = image
+        updateTableHeaderView()
     }
     
 }

@@ -20,6 +20,7 @@
 		966170A9253E1E040089EDFA /* UIImage+Cropping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966170A8253E1E040089EDFA /* UIImage+Cropping.swift */; };
 		966170BE254164BC0089EDFA /* ObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966170BD254164BC0089EDFA /* ObjectViewController.swift */; };
 		966170C9254198170089EDFA /* ObjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966170C8254198170089EDFA /* ObjectsViewController.swift */; };
+		966170D72541AD320089EDFA /* ChangeImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966170D62541AD320089EDFA /* ChangeImageController.swift */; };
 		96896ED32529E14600D4816B /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96896ED22529E14600D4816B /* RecipeViewController.swift */; };
 		96896ED82529E78200D4816B /* RecipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96896ED72529E78200D4816B /* RecipeController.swift */; };
 		96896EE02529ECC900D4816B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96896EDF2529ECC900D4816B /* Localizable.strings */; };
@@ -83,6 +84,7 @@
 		966170A8253E1E040089EDFA /* UIImage+Cropping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Cropping.swift"; sourceTree = "<group>"; };
 		966170BD254164BC0089EDFA /* ObjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectViewController.swift; sourceTree = "<group>"; };
 		966170C8254198170089EDFA /* ObjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsViewController.swift; sourceTree = "<group>"; };
+		966170D62541AD320089EDFA /* ChangeImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeImageController.swift; sourceTree = "<group>"; };
 		96896ED22529E14600D4816B /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
 		96896ED72529E78200D4816B /* RecipeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeController.swift; sourceTree = "<group>"; };
 		96896EDF2529ECC900D4816B /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 		966170B32540215C0089EDFA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				966170D62541AD320089EDFA /* ChangeImageController.swift */,
 				966170C8254198170089EDFA /* ObjectsViewController.swift */,
 				966170BD254164BC0089EDFA /* ObjectViewController.swift */,
 			);
@@ -498,6 +501,7 @@
 				961E055E25288B1A00C15C4C /* SceneDelegate.swift in Sources */,
 				96D35CD52529CDB800D1CBD8 /* Recipe.swift in Sources */,
 				966170C9254198170089EDFA /* ObjectsViewController.swift in Sources */,
+				966170D72541AD320089EDFA /* ChangeImageController.swift in Sources */,
 				966170A0253D7F780089EDFA /* EditableImageView.swift in Sources */,
 				96D35CDA2529D11600D1CBD8 /* Food.swift in Sources */,
 				969BD610253A083B00CC7DF2 /* UnitsOfMeasureViewController.swift in Sources */,
