@@ -135,7 +135,7 @@ extension RecipesViewController: NSFetchedResultsControllerDelegate {
 
 extension RecipesViewController: ObjectViewControllerDelegate {
     
-    func objectViewControllerDidCancel(_ viewController: ObjectViewController) {
+    func objectViewControllerDidCancel(_ viewController: UIViewController) {
         if let createdRecipe = createdRecipe {
             managedObjectContext.delete(createdRecipe)
             navigationController?.popViewController(animated: true)
@@ -144,7 +144,7 @@ extension RecipesViewController: ObjectViewControllerDelegate {
         }
     }
     
-    func objectViewController(_ viewController: ObjectViewController, didEndEditing object: NSManagedObject) {
+    func objectViewController(_ viewController: UIViewController, didEndEditing object: NSManagedObject) {
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()

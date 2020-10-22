@@ -9,13 +9,11 @@ import UIKit
 import CoreData
 import AVFoundation
 
-class RecipeViewController: ObjectViewController {
+class RecipeViewController: ObjectViewController<Recipe> {
     
     var recipe: Recipe {
         get {
-            // swiftlint:disable force_cast
-            return object as! Recipe
-            // swiftlint:enable force_cast
+            return object
         }
         set {
             object = newValue

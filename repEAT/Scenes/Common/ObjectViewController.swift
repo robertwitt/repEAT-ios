@@ -8,9 +8,9 @@
 import UIKit
 import CoreData
 
-class ObjectViewController: UITableViewController {
+class ObjectViewController<Object: NSManagedObject>: UITableViewController {
     
-    var object: NSManagedObject!
+    var object: Object!
     var shouldShowEditButtons = true
     weak var delegate: ObjectViewControllerDelegate?
     
@@ -74,11 +74,11 @@ class ObjectViewController: UITableViewController {
 }
 
 protocol ObjectViewControllerDelegate: class {
-    func objectViewControllerDidCancel(_ viewController: ObjectViewController)
-    func objectViewController(_ viewController: ObjectViewController, didEndEditing object: NSManagedObject)
+    func objectViewControllerDidCancel(_ viewController: UIViewController)
+    func objectViewController(_ viewController: UIViewController, didEndEditing object: NSManagedObject)
 }
 
 extension ObjectViewControllerDelegate {
-    func objectViewControllerDidCancel(_ viewController: ObjectViewController) {}
-    func objectViewController(_ viewController: ObjectViewController, didEndEditing object: NSManagedObject) {}
+    func objectViewControllerDidCancel(_ viewController: UIViewController) {}
+    func objectViewController(_ viewController: UIViewController, didEndEditing object: NSManagedObject) {}
 }

@@ -156,12 +156,15 @@ extension FoodsViewController: UISearchBarDelegate {
 
 extension FoodsViewController: ObjectViewControllerDelegate {
     
-    func objectViewControllerDidCancel(_ viewController: ObjectViewController) {
-        managedObjectContext.delete(viewController.object)
+    func objectViewControllerDidCancel(_ viewController: UIViewController) {
+        guard let food = (viewController as? FoodViewController)?.food else {
+            return
+        }
+        managedObjectContext.delete(food)
         viewController.dismiss(animated: true)
     }
     
-    func objectViewController(_ viewController: ObjectViewController, didEndEditing object: NSManagedObject) {
+    func objectViewController(_ viewController: UIViewController, didEndEditing object: NSManagedObject) {
         viewController.dismiss(animated: true)
     }
     

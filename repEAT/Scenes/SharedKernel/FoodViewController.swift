@@ -7,13 +7,11 @@
 
 import UIKit
 
-class FoodViewController: ObjectViewController {
+class FoodViewController: ObjectViewController<Food> {
     
     var food: Food! {
         get {
-            // swiftlint:disable force_cast
-            return (object as! Food)
-            // swiftlint:enable force_cast
+            return object
         }
         set {
             object = newValue
