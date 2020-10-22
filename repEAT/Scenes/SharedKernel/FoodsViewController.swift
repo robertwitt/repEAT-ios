@@ -152,16 +152,16 @@ extension FoodsViewController: UISearchBarDelegate {
     
 }
 
-// MARK: - Food View Controller Delegate
+// MARK: - Object View Controller Delegate
 
-extension FoodsViewController: FoodViewControllerDelegate {
+extension FoodsViewController: ObjectViewControllerDelegate {
     
-    func foodViewControllerDidCancel(_ viewController: FoodViewController) {
-        managedObjectContext.delete(viewController.food)
+    func objectViewControllerDidCancel(_ viewController: ObjectViewController) {
+        managedObjectContext.delete(viewController.object)
         viewController.dismiss(animated: true)
     }
     
-    func foodViewController(_ viewController: FoodViewController, didEndEditingFood food: Food) {
+    func objectViewController(_ viewController: ObjectViewController, didEndEditing object: NSManagedObject) {
         viewController.dismiss(animated: true)
     }
     

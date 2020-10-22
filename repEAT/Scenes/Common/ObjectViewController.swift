@@ -8,9 +8,9 @@
 import UIKit
 import CoreData
 
-class ObjectViewController<Object: NSManagedObject>: UITableViewController {
+class ObjectViewController: UITableViewController {
     
-    var object: Object!
+    var object: NSManagedObject!
     var shouldShowEditButtons = true
     weak var delegate: ObjectViewControllerDelegate?
     
@@ -63,26 +63,22 @@ class ObjectViewController<Object: NSManagedObject>: UITableViewController {
     }
     
     func cancelEdit() {
-        // swiftlint:disable force_cast
-        delegate?.objectViewControllerDidCancel(self as! ObjectViewController<NSManagedObject>)
-        // swiftlint:enable force_cast
+        delegate?.objectViewControllerDidCancel(self)
         isCancellationRequested = false
     }
     
     func commitEdit() {
-        // swiftlint:disable force_cast
-        delegate?.objectViewController(self as! ObjectViewController<NSManagedObject>, didEndEditing: object)
-        // swiftlint:enable force_cast
+        delegate?.objectViewController(self, didEndEditing: object)
     }
 
 }
 
 protocol ObjectViewControllerDelegate: class {
-    func objectViewControllerDidCancel(_ viewController: ObjectViewController<NSManagedObject>)
-    func objectViewController(_ viewController: ObjectViewController<NSManagedObject>, didEndEditing object: NSManagedObject)
+    func objectViewControllerDidCancel(_ viewController: ObjectViewController)
+    func objectViewController(_ viewController: ObjectViewController, didEndEditing object: NSManagedObject)
 }
 
 extension ObjectViewControllerDelegate {
-    func objectViewControllerDidCancel(_ viewController: ObjectViewController<NSManagedObject>) {}
-    func objectViewController(_ viewController: ObjectViewController<NSManagedObject>, didEndEditing object: NSManagedObject) {}
+    func objectViewControllerDidCancel(_ viewController: ObjectViewController) {}
+    func objectViewController(_ viewController: ObjectViewController, didEndEditing object: NSManagedObject) {}
 }
