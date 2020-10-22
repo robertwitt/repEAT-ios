@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import CoreData
 
-class FoodViewController: ObjectViewController<Food> {
+class FoodViewController: ObjectViewController<Food>, ObjectsViewControllerDelegate {
     
     var food: Food! {
         get {
@@ -97,18 +98,14 @@ class FoodViewController: ObjectViewController<Food> {
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return false
     }
-
-}
-
-// MARK: - Unit of Measure View Controller Delegate
-
-extension FoodViewController: UnitsOfMeasureViewControllerDelegate {
     
-    func unitsOfMeasureViewController(_ viewController: UnitsOfMeasureViewController, didSelectUnit unit: UnitOfMeasure) {
-        food.baseUnit = unit
+    // MARK: Objects View Controller
+    
+    func objectsViewController(_ viewController: UIViewController, didSelect object: NSManagedObject) {
+        food.baseUnit = object as? UnitOfMeasure
         let indexPath = IndexPath(row: Row.unit.rawValue, section: 0)
         tableView.reloadRows(at: [indexPath], with: .none)
         navigationController?.popViewController(animated: true)
     }
-    
+
 }

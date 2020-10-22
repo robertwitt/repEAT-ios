@@ -33,12 +33,13 @@ class ObjectsViewController<Object: NSManagedObject>: UITableViewController, NSF
         }
     }
     
-    private func setupFetchedResultsController() {
+    func setupFetchedResultsController() {
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                               managedObjectContext: managedObjectContext,
                                                               sectionNameKeyPath: nil,
                                                               cacheName: nil)
         fetchedResultsController.delegate = self
+        searchObjects()
     }
     
     func searchObjects(_ searchText: String? = nil) {
