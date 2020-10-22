@@ -10,7 +10,6 @@ import CoreData
 
 class ObjectsViewController<Object: NSManagedObject>: UITableViewController, NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate, ObjectViewControllerDelegate {
     
-    var isSearchable = false
     weak var delegate: ObjectsViewControllerDelegate?
     
     var managedObjectContext: NSManagedObjectContext {
@@ -23,6 +22,7 @@ class ObjectsViewController<Object: NSManagedObject>: UITableViewController, NSF
     var fetchedResultsController: NSFetchedResultsController<Object>!
     private(set) var fetchRequest: NSFetchRequest<Object>!
     var searchController: UISearchController?
+    private(set) var isSearchable = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,6 +137,12 @@ class ObjectsViewController<Object: NSManagedObject>: UITableViewController, NSF
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
+    
+    // MARK: Object View Controller Delegate
+    
+    func objectViewControllerDidCancel(_ viewController: UIViewController) {}
+    
+    func objectViewController(_ viewController: UIViewController, didEndEditing object: NSManagedObject) {}
 
 }
 
