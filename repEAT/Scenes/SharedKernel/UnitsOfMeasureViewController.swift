@@ -65,13 +65,9 @@ class UnitsOfMeasureViewController: UITableViewController {
 // MARK: - Units of Measure View Controller Delegate
 
 protocol UnitsOfMeasureViewControllerDelegate: class {
-    
     func unitsOfMeasureViewController(_ viewController: UnitsOfMeasureViewController, didSelectUnit unit: UnitOfMeasure)
-    
 }
 
 extension UnitsOfMeasureViewControllerDelegate {
-    
     func unitsOfMeasureViewController(_ viewController: UnitsOfMeasureViewController, didSelectUnit unit: UnitOfMeasure) {}
-    
 }

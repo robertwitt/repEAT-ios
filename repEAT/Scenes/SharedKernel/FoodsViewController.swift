@@ -170,13 +170,9 @@ extension FoodsViewController: ObjectViewControllerDelegate {
 // MARK: - Foods View Controller Delegate
 
 protocol FoodsViewControllerDelegate: class {
-    
     func foodsViewController(_ viewController: FoodsViewController, didSelectFood food: Food)
-    
 }
 
 extension FoodsViewControllerDelegate {
-    
     func foodsViewController(_ viewController: FoodsViewController, didSelectFood food: Food) {}
-    
 }

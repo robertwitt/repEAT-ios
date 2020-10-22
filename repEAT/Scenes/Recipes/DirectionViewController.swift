@@ -94,15 +94,10 @@ extension DirectionViewController: UITextViewDelegate {
 // MARK: - Direction View Controller Delegate
 
 protocol DirectionViewControllerDelegate: class {
-    
     func directionViewController(_ viewController: DirectionViewController, didEndEditing direction: Direction)
-    
     func directionViewController(_ viewController: DirectionViewController, directionToAddAfter direction: Direction) -> Direction
-    
 }
 
 extension DirectionViewControllerDelegate {
-    
     func directionViewController(_ viewController: DirectionViewController, didEndEditing direction: Direction) {}
-    
 }

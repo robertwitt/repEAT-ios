@@ -126,15 +126,10 @@ extension IngredientViewController: FoodsViewControllerDelegate {
 // MARK: - Ingredient View Controller Delegate
 
 protocol IngredientViewControllerDelegate: class {
-    
     func ingredientViewController(_ viewController: IngredientViewController, didEndEditing ingredient: Ingredient)
-    
     func ingredientViewControllerNewIngredient(_ viewController: IngredientViewController) -> Ingredient
-    
 }
 
 extension IngredientViewControllerDelegate {
-    
     func ingredientViewController(_ viewController: IngredientViewController, didEndEditing ingredient: Ingredient) {}
-    
 }
