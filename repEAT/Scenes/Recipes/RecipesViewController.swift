@@ -8,37 +8,14 @@
 import UIKit
 import CoreData
 
-class RecipesViewController: UITableViewController {
+class RecipesViewController: ObjectsViewController<Recipe> {
     
-    private var managedObjectContext: NSManagedObjectContext {
-        // TODO Find better way to get pointer to managed object context
-        // swiftlint:disable force_cast
-        return (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        // swiftlint:enable force_cast
-    }
-    
-    private var fetchedResultsController: NSFetchedResultsController<Recipe>!
     private var createdRecipe: Recipe?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupFetchedResultsController()
-    }
     
-    private func setupFetchedResultsController() {
+    override var fetchRequest: NSFetchRequest<Recipe>! {
         let request = NSFetchRequest<Recipe>(entityName: "Recipe")
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        fetchedResultsController = NSFetchedResultsController(fetchRequest: request,
-                                                              managedObjectContext: managedObjectContext,
-                                                              sectionNameKeyPath: nil,
-                                                              cacheName: nil)
-        fetchedResultsController.delegate = self
-        
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            // TODO Handle error
-        }
+        return request
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -67,10 +44,6 @@ class RecipesViewController: UITableViewController {
     
     // MARK: Table View Data Source
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let recipe = fetchedResultsController.object(at: indexPath)
         
@@ -81,24 +54,10 @@ class RecipesViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        switch editingStyle {
-        case .delete:
-            deleteRow(at: indexPath)
-        default:
-            break
-        }
-    }
+    // MARK: Table View Delegate
     
-    private func deleteRow(at indexPath: IndexPath) {
-        let recipe = fetchedResultsController.object(at: indexPath)
-        managedObjectContext.delete(recipe)
-        
-        do {
-            try managedObjectContext.save()
-        } catch {
-            // TODO Error handling
-        }
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
     // MARK: Actions
@@ -107,35 +66,9 @@ class RecipesViewController: UITableViewController {
         performSegue(withIdentifier: "RecipeSegue", sender: nil)
     }
     
-}
-
-// MARK: - Fetched Results Controller Delegate
-
-extension RecipesViewController: NSFetchedResultsControllerDelegate {
+    // MARK: - Object View Controller Delegate
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        switch type {
-        case .insert:
-            tableView.insertRows(at: [newIndexPath!], with: .automatic)
-        case .update:
-            tableView.reloadRows(at: [indexPath!], with: .automatic)
-        case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .automatic)
-        case .move:
-            tableView.moveRow(at: indexPath!, to: newIndexPath!)
-            tableView.reloadRows(at: [newIndexPath!], with: .none)
-        default:
-            break
-        }
-    }
-
-}
-
-// MARK: - Object View Controller Delegate
-
-extension RecipesViewController: ObjectViewControllerDelegate {
-    
-    func objectViewControllerDidCancel(_ viewController: UIViewController) {
+    override func objectViewControllerDidCancel(_ viewController: UIViewController) {
         if let createdRecipe = createdRecipe {
             managedObjectContext.delete(createdRecipe)
             navigationController?.popViewController(animated: true)
@@ -144,7 +77,7 @@ extension RecipesViewController: ObjectViewControllerDelegate {
         }
     }
     
-    func objectViewController(_ viewController: UIViewController, didEndEditing object: NSManagedObject) {
+    override func objectViewController(_ viewController: UIViewController, didEndEditing object: NSManagedObject) {
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()

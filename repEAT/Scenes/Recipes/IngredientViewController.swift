@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class IngredientViewController: UITableViewController {
     
@@ -112,10 +113,10 @@ class IngredientViewController: UITableViewController {
 
 // MARK: - Foods View Controller Delegate
 
-extension IngredientViewController: FoodsViewControllerDelegate {
+extension IngredientViewController: ObjectsViewControllerDelegate {
     
-    func foodsViewController(_ viewController: FoodsViewController, didSelectFood food: Food) {
-        ingredient.food = food
+    func objectsViewController(_ viewController: UIViewController, didSelect object: NSManagedObject) {
+        ingredient.food = object as? Food
         ingredient.quantity = 0.0
         updateView()
         navigationController?.popViewController(animated: true)

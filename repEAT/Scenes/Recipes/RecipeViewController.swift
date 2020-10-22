@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreData
 import AVFoundation
 
 class RecipeViewController: ObjectViewController<Recipe> {
