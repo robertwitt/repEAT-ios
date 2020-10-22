@@ -10,6 +10,16 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    // swiftlint:disable force_cast
+    static let singleton = UIApplication.shared.delegate as! AppDelegate
+    // swiftlint:enable force_cast
+    
+    func openSettings() {
+        if let settingsURL = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(settingsURL) {
+            UIApplication.shared.open(settingsURL)
+        }
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

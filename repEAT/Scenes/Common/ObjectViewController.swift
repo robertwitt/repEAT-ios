@@ -45,13 +45,13 @@ class ObjectViewController: UITableViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         editing ? didBeginEditing() : didEndEditing()
+        updateNavBar()
     }
     
     func didBeginEditing() {}
     
     func didEndEditing() {
         updateObject()
-        updateNavBar()
     }
     
     private func updateObject() {
