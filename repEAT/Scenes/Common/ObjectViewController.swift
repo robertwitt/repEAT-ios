@@ -14,7 +14,7 @@ class ObjectViewController<Object: NSManagedObject>: UITableViewController {
     var shouldShowEditButtons = true
     weak var delegate: ObjectViewControllerDelegate?
     
-    var cancelButtonItem: UIBarButtonItem {
+    private var cancelButtonItem: UIBarButtonItem {
         return UIBarButtonItem(barButtonSystemItem: .cancel,
                                target: self,
                                action: #selector(cancelItemPressed))
@@ -72,6 +72,8 @@ class ObjectViewController<Object: NSManagedObject>: UITableViewController {
     }
 
 }
+
+// MARK: - Object View Controller Delegate
 
 protocol ObjectViewControllerDelegate: class {
     func objectViewControllerDidCancel(_ viewController: UIViewController)
