@@ -77,6 +77,10 @@ class ObjectsViewController<Object: NSManagedObject>: UITableViewController, NSF
         return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
