@@ -2,6 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
+    <dict>
+        <key>code</key>
+        <string>cups</string>
+        <key>name</key>
+        <string>Cups</string>
+    </dict>
+    <dict>
+        <key>code</key>
+        <string>g</string>
+        <key>name</key>
+        <string>Grams</string>
+    </dict>
+    <dict>
+        <key>code</key>
+        <string>ml</string>
+        <key>name</key>
+        <string>Milliliters</string>
+    </dict>
 	<dict>
 		<key>code</key>
 		<string>oz</string>
@@ -16,15 +34,15 @@
 	</dict>
 	<dict>
 		<key>code</key>
-		<string>cups</string>
-		<key>name</key>
-		<string>Cups</string>
-	</dict>
-	<dict>
-		<key>code</key>
 		<string>slices</string>
 		<key>name</key>
 		<string>Slices</string>
 	</dict>
+    <dict>
+        <key>code</key>
+        <string>tsp</string>
+        <key>name</key>
+        <string>Tablespoons</string>
+    </dict>
 </array>
 </plist>
