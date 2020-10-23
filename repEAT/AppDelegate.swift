@@ -72,6 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return container
     }()
     
+    // swiftlint:disable function_body_length
     private func seedSampleData(context: NSManagedObjectContext) {
         // swiftlint:disable line_length
         let userDefaultsKey = "SampleDBInitializedKey"
@@ -79,12 +80,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        let plist = UnitOfMeasurePlist()
-        let uoms = plist.units.map { (unit) -> UnitOfMeasure in
-            let uom = UnitOfMeasure(context: context)
-            uom.code = unit.code
-            uom.name = unit.name
-            return uom
+        var uoms = [UnitOfMeasure]()
+        do {
+            let plist = try UnitOfMeasurePlist()
+            uoms = plist.units.map { (unit) -> UnitOfMeasure in
+                let uom = UnitOfMeasure(context: context)
+                uom.code = unit.code
+                uom.name = unit.name
+                return uom
+            }
+        } catch {
         }
         
         let recipe = Recipe(context: context)
@@ -125,6 +130,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         // swiftlint:enable line_length
     }
+    // swiftlint:enable function_body_length
     
     private func addIngredient(_ food: Food, quantity: Ingredient.Quantity = 0.0, to recipe: Recipe) {
         let ingredient = Ingredient(context: recipe.managedObjectContext!)

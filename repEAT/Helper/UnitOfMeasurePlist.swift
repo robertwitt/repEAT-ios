@@ -16,12 +16,8 @@ class UnitOfMeasurePlist {
     
     private(set) var units = [Unit]()
     
-    init() {
-        do {
-            units = try loadUnits()
-        } catch {
-            // TODO Error handling
-        }
+    init() throws {
+        units = try loadUnits()
     }
     
     private func loadUnits() throws -> [Unit] {

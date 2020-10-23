@@ -47,8 +47,8 @@ class ObjectsViewController<Object: NSManagedObject>: UITableViewController, NSF
         do {
             try fetchedResultsController.performFetch()
             tableView.reloadData()
-        } catch {
-            // TODO Error handling
+        } catch let error {
+            present(ErrorAlertController(error), animated: true)
         }
     }
     
@@ -96,8 +96,8 @@ class ObjectsViewController<Object: NSManagedObject>: UITableViewController, NSF
         
         do {
             try managedObjectContext.save()
-        } catch {
-            // TODO Error handling
+        } catch let error {
+            present(ErrorAlertController(error), animated: true)
         }
     }
 

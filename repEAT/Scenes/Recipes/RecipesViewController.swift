@@ -81,8 +81,8 @@ class RecipesViewController: ObjectsViewController<Recipe> {
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
-            } catch {
-                // TODO Error handling
+            } catch let error {
+                present(ErrorAlertController(error), animated: true)
             }
         }
     }
