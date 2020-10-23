@@ -22,6 +22,7 @@ class UnitsOfMeasureViewController: ObjectsViewController<UnitOfMeasure> {
         let unit = fetchedResultsController.object(at: indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: "UnitCell", for: indexPath)
         cell.textLabel?.text = unit.name
+        cell.detailTextLabel?.text = unit.code
         return cell
     }
 
