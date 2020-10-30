@@ -81,6 +81,12 @@
 		961E05B22528947500C15C4C /* shared-kernel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shared-kernel.png"; sourceTree = "<group>"; };
 		961E05B32528947500C15C4C /* recipe-context.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recipe-context.png"; sourceTree = "<group>"; };
 		961E05B42528949700C15C4C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		96477679254C0A1F005A34FD /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		9647767A254C0A1F005A34FD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9647767B254C0A1F005A34FD /* meal-plan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "meal-plan.png"; sourceTree = "<group>"; };
+		9647767C254C0A1F005A34FD /* household.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = household.png; sourceTree = "<group>"; };
+		9647767D254C0A1F005A34FD /* recipe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recipe.png; sourceTree = "<group>"; };
+		9647767E254C0A1F005A34FD /* app-layout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app-layout.png"; sourceTree = "<group>"; };
 		965C02BA2542BCAC0098E7A7 /* ErrorAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertController.swift; sourceTree = "<group>"; };
 		9661709F253D7F780089EDFA /* EditableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableImageView.swift; sourceTree = "<group>"; };
 		966170A8253E1E040089EDFA /* UIImage+Cropping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Cropping.swift"; sourceTree = "<group>"; };
@@ -233,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				961E05B02528947500C15C4C /* DomainModel */,
+				96477678254C0A1F005A34FD /* UIMockups */,
 			);
 			path = Docs;
 			sourceTree = "<group>";
@@ -258,6 +265,19 @@
 				969BD5B825354D7A00CC7DF2 /* DirectionViewController.swift */,
 			);
 			path = Recipes;
+			sourceTree = "<group>";
+		};
+		96477678254C0A1F005A34FD /* UIMockups */ = {
+			isa = PBXGroup;
+			children = (
+				96477679254C0A1F005A34FD /* search.png */,
+				9647767A254C0A1F005A34FD /* README.md */,
+				9647767B254C0A1F005A34FD /* meal-plan.png */,
+				9647767C254C0A1F005A34FD /* household.png */,
+				9647767D254C0A1F005A34FD /* recipe.png */,
+				9647767E254C0A1F005A34FD /* app-layout.png */,
+			);
+			path = UIMockups;
 			sourceTree = "<group>";
 		};
 		966170A7253E1DEA0089EDFA /* Extension */ = {
